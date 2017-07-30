@@ -1,26 +1,25 @@
-﻿using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.Security;
-using Ninject;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Routing;
+using NightChat.WebApi.Common.Authorization;
 
 namespace NightChat.WebApi.Facebook.Authorization
 {
-    public class FacebookMvcAuthorizeAttribute : AuthorizeAttribute
+    public class FacebookMvcAuthorizeAttribute : ActionFilterAttribute
     {
-        [Inject]
         public IFacebookAuthorization FacebookAuthorization { get; set; }
+        public IFormsAuthenticationService FormsAuthenticationService { get; set; }
 
-        public override void OnAuthorization(AuthorizationContext filterContext)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (!FacebookAuthorization.IsAuthorized(HttpContext.Current.User))
+            if (!FacebookAuthorization.IsAuthorized(filterContext.HttpContext.User))
             {
-                FormsAuthentication.SignOut();
+                FormsAuthenticationService.SignOut();
                 HandleUnauthorizedRequest(filterContext);
             }
         }
 
-        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        protected void HandleUnauthorizedRequest(ActionExecutingContext filterContext)
         {
             filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Chat", action = "NotAuthorized" }));
         }

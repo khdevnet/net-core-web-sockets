@@ -1,20 +1,22 @@
-﻿using NightChat.WebApi.Controllers;
+﻿using AspNetCoreChatRoom.Facebook;
+using Microsoft.Extensions.Options;
+using NightChat.WebApi.Controllers;
 using Plugin.Core.Extensibility;
 
 namespace NightChat.WebApi.Facebook
 {
     public class FacebookRedirectUrlProvider : IFacebookRedirectUrlProvider
     {
-        private readonly IAppSettingsProvider appSettingsProvider;
+        private readonly IOptions<FacebookOauthOptions> facebookOauthOptions;
 
-        public FacebookRedirectUrlProvider(IAppSettingsProvider appSettingsProvider)
+        public FacebookRedirectUrlProvider(IOptions<FacebookOauthOptions> facebookOauthOptions)
         {
-            this.appSettingsProvider = appSettingsProvider;
+            this.facebookOauthOptions = facebookOauthOptions;
         }
 
         public string Get()
         {
-            return $"{appSettingsProvider.GetValue("appUrl")}/Oauth/{nameof(OauthController.Callback)}";
+            return $"{facebookOauthOptions.Value.AppUrl}/Oauth/{nameof(OauthController.Callback)}";
         }
     }
 }

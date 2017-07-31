@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Primitives;
 
 namespace NightChat.WebApi.Common
 {
@@ -10,7 +11,8 @@ namespace NightChat.WebApi.Common
         {
             var uri = new Uri(url);
             var ub = new UriBuilder(uri);
-            NameValueCollection httpValueCollection = WebUtilties.ParseQueryString(uri.Query);
+
+            Dictionary<string, StringValues> httpValueCollection = QueryHelpers.ParseQuery(uri.Query);
 
             foreach (KeyValuePair<string, string> keyValue in keyValues)
             {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using AspNetCoreChatRoom.Facebook;
+using Microsoft.Extensions.Options;
 using NightChat.WebApi.Common;
-using Plugin.Core.Extensibility;
 
 namespace NightChat.WebApi.Facebook
 {
@@ -16,12 +17,12 @@ namespace NightChat.WebApi.Facebook
         };
 
         public FacebookLoginUrlProvider(
-            IAppSettingsProvider appSettingsProvider,
+            IOptions<FacebookOauthOptions> facebookOauthOptions,
             IUrlProvider urlProvider,
             IFacebookRedirectUrlProvider facebookRedirectUrlProvider)
         {
             this.urlProvider = urlProvider;
-            query.Add("client_id", appSettingsProvider.GetValue("clientId"));
+            query.Add("client_id", facebookOauthOptions.Value.ClientId);
             query.Add("redirect_uri", facebookRedirectUrlProvider.Get());
         }
 

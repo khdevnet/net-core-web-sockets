@@ -7,6 +7,7 @@ namespace NightChat.WebApi.Common.Authorization
     public class FormsAuthenticationService : IFormsAuthenticationService
     {
         private readonly IHttpContextAccessor httpContextAccessor;
+
         public FormsAuthenticationService(IHttpContextAccessor httpContextAccessor)
         {
             this.httpContextAccessor = httpContextAccessor;

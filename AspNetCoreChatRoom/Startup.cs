@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AspNetCoreChatRoom.Facebook;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
 
 namespace AspNetCoreChatRoom
 {
@@ -25,10 +25,15 @@ namespace AspNetCoreChatRoom
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
+            services.AddOptions();
+
+            services.Configure<FacebookOauthOptions>(oauthOptions =>
+            {
+                Configuration.GetSection("FacebookOauthOptions").Bind(oauthOptions);
+            });
+
             services.AddMvc();
             services.AddRouting();
-            // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -48,7 +53,7 @@ namespace AspNetCoreChatRoom
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/chat/error");
             }
 
             app.UseStaticFiles();

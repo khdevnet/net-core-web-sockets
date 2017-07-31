@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
+using AspNetCoreChatRoom.Common.Http;
+using AspNetCoreChatRoom.Facebook;
+using Microsoft.Extensions.Options;
 using NightChat.WebApi.Common;
 using NightChat.WebApi.Facebook.Models;
-using Plugin.Core.Extensibility;
 using Plugin.Http.Extensibility.Dto;
 using Plugin.Http.Extensibility.Senders;
 
@@ -15,31 +16,31 @@ namespace NightChat.WebApi.Facebook
         private const string GetAcessTokenUrl = "https://graph.facebook.com/v2.9/oauth/access_token";
         private readonly IHttpMessageSender httpMessageSender;
         private readonly IUrlProvider urlProvider;
-        private readonly IAppSettingsProvider appSettingsProvider;
+        private readonly FacebookOauthOptions facebookOauthOptions;
         private readonly IFacebookRedirectUrlProvider facebookRedirectUrlProvider;
 
         public FacebookHttpSender(
             IHttpMessageSender httpMessageSender,
             IUrlProvider urlProvider,
-            IAppSettingsProvider appSettingsProvider,
+            IOptions<FacebookOauthOptions> facebookOauthOptions,
             IFacebookRedirectUrlProvider facebookRedirectUrlProvider)
         {
             this.httpMessageSender = httpMessageSender;
             this.urlProvider = urlProvider;
-            this.appSettingsProvider = appSettingsProvider;
+            this.facebookOauthOptions = facebookOauthOptions.Value;
             this.facebookRedirectUrlProvider = facebookRedirectUrlProvider;
         }
 
         public UserInfoModel GetUserDetails(string token)
         {
             HttpMessageSenderResponse response = httpMessageSender.Get(urlProvider.GetUrlQuery(GetMeUrl, GetUserInfoUrlQuery(token)), GetHeader());
-            return IsResponseOk(response) ? response.Response.Content.ReadAsAsync<UserInfoModel>().Result : null;
+            return IsResponseOk(response) ? response.Response.Content.Read<UserInfoModel>() : null;
         }
 
         public TokenModel GetToken(string code)
         {
             HttpMessageSenderResponse response = httpMessageSender.Get(urlProvider.GetUrlQuery(GetAcessTokenUrl, GetTokenUrlQuery(code)));
-            return IsResponseOk(response) ? response.Response.Content.ReadAsAsync<TokenModel>().Result : null;
+            return IsResponseOk(response) ? response.Response.Content.Read<TokenModel>() : null;
         }
 
         private static bool IsResponseOk(HttpMessageSenderResponse response)
@@ -65,9 +66,9 @@ namespace NightChat.WebApi.Facebook
         {
             return new Dictionary<string, string>
             {
-                { "client_id", appSettingsProvider.GetValue("clientId") },
+                { "client_id", facebookOauthOptions.ClientId },
                 { "redirect_uri", facebookRedirectUrlProvider.Get() },
-                { "client_secret", appSettingsProvider.GetValue("client_secret") },
+                { "client_secret", facebookOauthOptions.ClientSecret },
                 { "code", code }
             };
         }

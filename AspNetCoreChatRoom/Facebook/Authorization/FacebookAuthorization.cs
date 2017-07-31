@@ -1,7 +1,6 @@
 ﻿using System.Security.Authentication;
 using System.Security.Principal;
-using System.Web.Security;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 using NightChat.WebApi.Common.Authorization;
 using NightChat.WebApi.Common.Services;
 using NightChat.WebApi.Facebook.Models;
@@ -14,17 +13,20 @@ namespace NightChat.WebApi.Facebook.Authorization
         private readonly IUsersService usersService;
         private readonly ITokensService tokensService;
         private readonly IFormsAuthenticationService formsAuthenticationService;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
         public FacebookAuthorization(
             IFacebookHttpSender facebookHttpSender,
             IUsersService usersService,
             ITokensService tokensService,
-            IFormsAuthenticationService formsAuthenticationService)
+            IFormsAuthenticationService formsAuthenticationService,
+            IHttpContextAccessor httpContextAccessor)
         {
             this.facebookHttpSender = facebookHttpSender;
             this.usersService = usersService;
             this.tokensService = tokensService;
             this.formsAuthenticationService = formsAuthenticationService;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public void Authorize(CodeModel codeModel)
@@ -53,12 +55,7 @@ namespace NightChat.WebApi.Facebook.Authorization
 
         public bool TryGetUser(IIdentity identity, out UserIdentity user)
         {
-            user = null;
-            var formsIdentity = identity as FormsIdentity;
-            if (formsIdentity != null)
-            {
-                user = JsonConvert.DeserializeObject<UserIdentity>(formsIdentity.Ticket.UserData);
-            }
+            user = httpContextAccessor.HttpContext.User.Identity as UserIdentity;
             return user != null;
         }
     }

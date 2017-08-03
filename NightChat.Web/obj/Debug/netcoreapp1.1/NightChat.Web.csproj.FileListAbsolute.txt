@@ -1,0 +1,9 @@
+c:\users\anton.shcherbyna\documents\visual studio 2017\Projects\NightChat\NightChat.Web\bin\Debug\netcoreapp1.1\NightChat.Web.deps.json
+c:\users\anton.shcherbyna\documents\visual studio 2017\Projects\NightChat\NightChat.Web\bin\Debug\netcoreapp1.1\NightChat.Web.runtimeconfig.json
+c:\users\anton.shcherbyna\documents\visual studio 2017\Projects\NightChat\NightChat.Web\bin\Debug\netcoreapp1.1\NightChat.Web.runtimeconfig.dev.json
+c:\users\anton.shcherbyna\documents\visual studio 2017\Projects\NightChat\NightChat.Web\bin\Debug\netcoreapp1.1\NightChat.Web.dll
+c:\users\anton.shcherbyna\documents\visual studio 2017\Projects\NightChat\NightChat.Web\bin\Debug\netcoreapp1.1\NightChat.Web.pdb
+c:\users\anton.shcherbyna\documents\visual studio 2017\Projects\NightChat\NightChat.Web\obj\Debug\netcoreapp1.1\NightChat.Web.AssemblyInfo.cs
+c:\users\anton.shcherbyna\documents\visual studio 2017\Projects\NightChat\NightChat.Web\obj\Debug\netcoreapp1.1\NightChat.Web.dll
+c:\users\anton.shcherbyna\documents\visual studio 2017\Projects\NightChat\NightChat.Web\obj\Debug\netcoreapp1.1\NightChat.Web.pdb
+C:\Users\anton.shcherbyna\Documents\Visual Studio 2017\Projects\NightChat\NightChat.Web\obj\Debug\netcoreapp1.1\NightChat.Web.csprojResolveAssemblyReference.cache

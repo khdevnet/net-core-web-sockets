@@ -4,13 +4,12 @@ namespace NightChat.WebApi.Common.Authorization
 {
     public class UserIdentity : IIdentity
     {
-        public UserIdentity(string authenticationType, bool isAuthenticated, string name, string id, string avatar)
+        public UserIdentity(string authenticationType, bool isAuthenticated, string name, string id)
         {
             AuthenticationType = authenticationType;
             IsAuthenticated = isAuthenticated;
             Name = name;
             Id = id;
-            Avatar = avatar;
         }
 
         public string AuthenticationType { get; }
@@ -18,8 +17,6 @@ namespace NightChat.WebApi.Common.Authorization
         public bool IsAuthenticated { get; }
 
         public string Name { get; }
-
-        public string Avatar { get; }
 
         public string Id { get; }
     }

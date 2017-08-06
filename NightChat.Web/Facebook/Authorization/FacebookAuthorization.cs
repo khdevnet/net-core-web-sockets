@@ -1,11 +1,11 @@
 ﻿using System.Security.Authentication;
-using System.Security.Claims;
 using System.Security.Principal;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+using NightChat.Domain.Dto;
 using NightChat.WebApi.Common.Authorization;
-using NightChat.WebApi.Common.Services;
 using NightChat.WebApi.Facebook.Models;
+using NightChat.Domain.Services;
 
 namespace NightChat.WebApi.Facebook.Authorization
 {
@@ -39,8 +39,8 @@ namespace NightChat.WebApi.Facebook.Authorization
                 UserInfoModel userModel = facebookHttpSender.GetUserDetails(token.AccessToken);
                 if (userModel != null)
                 {
-                    usersService.AddOrUpdateUser(userModel);
-                    tokensService.AddOrUpdateToken(userModel.Id, token);
+                    usersService.AddOrUpdateUser(Mapper.Map<UserData>(userModel));
+                    tokensService.AddOrUpdateToken(userModel.Id, Mapper.Map<TokenData>(token));
                     formsAuthenticationService.SetAuthCookie(userModel, token);
                     return;
                 }
@@ -57,20 +57,8 @@ namespace NightChat.WebApi.Facebook.Authorization
 
         public bool TryGetUser(IIdentity identity, out UserIdentity user)
         {
-         var s =   httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
             user = httpContextAccessor.HttpContext.User.Identity as UserIdentity;
             return user != null;
         }
-
-        //public bool TryGetUser(IIdentity identity, out UserIdentity user)
-        //{
-        //    user = null;
-        //    var formsIdentity = identity as ClaimsIdentity;
-        //    if (formsIdentity != null)
-        //    {
-        //        user = JsonConvert.DeserializeObject<UserIdentity>(formsIdentity.S Ticket.UserData);
-        //    }
-        //    return user != null;
-        //}
     }
 }

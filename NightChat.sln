@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NightChat.Web", "NightChat.Web\NightChat.Web.csproj", "{A20EC45F-7327-4CBC-B0E9-401DF489B54F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NightChat.WebApi", "NightChat.Web\NightChat.WebApi.csproj", "{A20EC45F-7327-4CBC-B0E9-401DF489B54F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NightChat.DataAccess", "NightChat.DataAccess\NightChat.DataAccess.csproj", "{A213AC46-8449-4A6F-9A49-31A8309B434D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NightChat.Core", "NightChat.Core\NightChat.Core.csproj", "{C5B84608-D020-4A1F-AA8E-C2DDB02F999F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NightChat.Domain", "NightChat.Domain\NightChat.Domain.csproj", "{A6217203-672F-4FCF-B10A-74B743CD7FFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{A20EC45F-7327-4CBC-B0E9-401DF489B54F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A20EC45F-7327-4CBC-B0E9-401DF489B54F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A20EC45F-7327-4CBC-B0E9-401DF489B54F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A213AC46-8449-4A6F-9A49-31A8309B434D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A213AC46-8449-4A6F-9A49-31A8309B434D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A213AC46-8449-4A6F-9A49-31A8309B434D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A213AC46-8449-4A6F-9A49-31A8309B434D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5B84608-D020-4A1F-AA8E-C2DDB02F999F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5B84608-D020-4A1F-AA8E-C2DDB02F999F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5B84608-D020-4A1F-AA8E-C2DDB02F999F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5B84608-D020-4A1F-AA8E-C2DDB02F999F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6217203-672F-4FCF-B10A-74B743CD7FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6217203-672F-4FCF-B10A-74B743CD7FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6217203-672F-4FCF-B10A-74B743CD7FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6217203-672F-4FCF-B10A-74B743CD7FFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using AspNetCoreChatRoom.Common.Http;
 using AspNetCoreChatRoom.Facebook;
 using Microsoft.Extensions.Options;
+using NightChat.Core.Http;
+using NightChat.Core.Http.Dto;
+using NightChat.Core.Http.Senders;
 using NightChat.WebApi.Common;
 using NightChat.WebApi.Facebook.Models;
-using Plugin.Http.Extensibility.Dto;
-using Plugin.Http.Extensibility.Senders;
 
 namespace NightChat.WebApi.Facebook
 {

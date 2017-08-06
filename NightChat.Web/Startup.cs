@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System;
 using AspNetCoreChatRoom.Facebook;
 using Autofac;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,16 +9,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NightChat.Domain;
+using NightChat.Domain.Dto;
 using NightChat.Web.Common.Authorization;
 using NightChat.WebApi.Common;
 using NightChat.WebApi.Common.Authorization;
-using NightChat.WebApi.Common.Data;
-using NightChat.WebApi.Common.Data.Repositories;
-using NightChat.WebApi.Common.Services;
 using NightChat.WebApi.Facebook;
 using NightChat.WebApi.Facebook.Authorization;
-using Plugin.Http.Extensibility.Senders;
-using Plugin.Http.Senders;
+using NightChat.WebApi.Facebook.Models;
+using NightChat.DataAccess;
 
 namespace NightChat.Web
 {
@@ -79,10 +77,18 @@ namespace NightChat.Web
                 Events = new CookieAuthenticationEvents
                 {
                     // Set other options
-                    OnValidatePrincipal = LastChangedValidator.ValidateAsync
+                    OnValidatePrincipal = CookieValidatator.ValidateAsync
                 }
             });
 
+            var webSocketOptions = new WebSocketOptions
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(120)
+            };
+
+            app.UseWebSockets(webSocketOptions);
+            app.UseMiddleware<ChatWebSocketMiddleware>();
+            AutoMapperConfigure();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -93,41 +99,24 @@ namespace NightChat.Web
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            builder.RegisterModule<DataAccessAutofacModule>();
+            builder.RegisterModule<DomainAutofacModule>();
             builder.RegisterType<FacebookHttpSender>().As<IFacebookHttpSender>();
-            builder.RegisterType<HttpMessageSender>().As<IHttpMessageSender>();
             builder.RegisterType<FacebookAuthorization>().As<IFacebookAuthorization>();
-            builder.RegisterType<TokensService>().As<ITokensService>();
-            builder.RegisterType<UsersService>().As<IUsersService>();
             builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>();
-            builder.RegisterType<SessionDataContext>().As<ISessionDataContext>().SingleInstance();
-            builder.RegisterType<UsersRepository>().As<IUsersRepository>();
-            builder.RegisterType<TokensRepository>().As<ITokensRepository>();
             builder.RegisterType<UrlProvider>().As<IUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookLoginUrlProvider>().As<IFacebookLoginUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookRedirectUrlProvider>().As<IFacebookRedirectUrlProvider>().SingleInstance();
         }
-    }
-    public static class LastChangedValidator
-    {
-        public static async Task ValidateAsync(CookieValidatePrincipalContext context)
+
+        private static void AutoMapperConfigure()
         {
-            ClaimsPrincipal userPrincipal = context.Principal;
-            if (!userPrincipal.Identity.IsAuthenticated)
+            Mapper.Initialize(config =>
             {
-                await context.HttpContext.Authentication.SignOutAsync(AuthorizationConstants.AuthCookieName);
-            }
-
-            var sender = context.HttpContext.RequestServices.GetRequiredService<IFacebookHttpSender>();
-            var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == "token");
-
-            if (claim != null)
-            {
-                var r = sender.InspectToken(claim.Value);
-                if (r != System.Net.HttpStatusCode.OK)
-                {
-                    await context.HttpContext.Authentication.SignOutAsync(AuthorizationConstants.AuthCookieName);
-                }
-            }
+                config.CreateMap<UserInfoModel, UserData>()
+                .ForCtorParam("avatar", opt => opt.MapFrom(src => src.Picture.Data.Url));
+                config.CreateMap<TokenModel, TokenData>();
+            });
         }
     }
 }

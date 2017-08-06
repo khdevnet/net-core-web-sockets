@@ -1,0 +1,7 @@
+C:\projects\net-core-web-sockets\NightChat.Core\bin\Debug\netcoreapp1.1\NightChat.Core.deps.json
+C:\projects\net-core-web-sockets\NightChat.Core\bin\Debug\netcoreapp1.1\NightChat.Core.dll
+C:\projects\net-core-web-sockets\NightChat.Core\bin\Debug\netcoreapp1.1\NightChat.Core.pdb
+C:\projects\net-core-web-sockets\NightChat.Core\obj\Debug\netcoreapp1.1\NightChat.Core.csprojResolveAssemblyReference.cache
+C:\projects\net-core-web-sockets\NightChat.Core\obj\Debug\netcoreapp1.1\NightChat.Core.AssemblyInfo.cs
+C:\projects\net-core-web-sockets\NightChat.Core\obj\Debug\netcoreapp1.1\NightChat.Core.dll
+C:\projects\net-core-web-sockets\NightChat.Core\obj\Debug\netcoreapp1.1\NightChat.Core.pdb

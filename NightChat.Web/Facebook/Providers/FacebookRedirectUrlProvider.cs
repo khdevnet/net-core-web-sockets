@@ -1,7 +1,6 @@
 ﻿using AspNetCoreChatRoom.Facebook;
 using Microsoft.Extensions.Options;
 using NightChat.WebApi.Controllers;
-using Plugin.Core.Extensibility;
 
 namespace NightChat.WebApi.Facebook
 {

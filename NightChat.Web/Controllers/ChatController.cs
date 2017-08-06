@@ -6,7 +6,6 @@ namespace NightChat.WebApi.Controllers
 {
     public class ChatController : Controller
     {
-        // [TypeFilter(typeof(FacebookMvcAuthorizeAttribute))]
         [Authorize]
         public ActionResult Index()
         {
@@ -19,11 +18,6 @@ namespace NightChat.WebApi.Controllers
         }
 
         public ActionResult NotAuthorized()
-        {
-            return View();
-        }
-
-        public ActionResult Test()
         {
             return View();
         }

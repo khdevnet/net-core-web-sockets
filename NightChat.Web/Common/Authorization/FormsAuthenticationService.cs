@@ -16,10 +16,11 @@ namespace NightChat.WebApi.Common.Authorization
 
         public void SetAuthCookie(UserInfoModel model, TokenModel token)
         {
-            var identity = new UserIdentity("Facebook", true, model.Name, model.Id, model.Picture.Data.Url);
-            var tokenClaim = new Claim("token", token.AccessToken);
-            var claimsIdentity = new ClaimsIdentity(identity, new[] { tokenClaim });
-            httpContextAccessor.HttpContext.Authentication.SignInAsync(AuthorizationConstants.AuthCookieName, new ClaimsPrincipal(claimsIdentity));
+            var identity = new UserIdentity("Facebook", true, model.Name, model.Id);
+            var tokenClaim = new Claim(AuthorizationConstants.TokenClaimName, token.AccessToken);
+            var avatarClaim = new Claim(AuthorizationConstants.AvatarClaimName, model.Picture.Data.Url);
+            var claimsIdentity = new ClaimsIdentity(identity, new[] { tokenClaim, avatarClaim });
+           httpContextAccessor.HttpContext.Authentication.SignInAsync(AuthorizationConstants.AuthCookieName, new ClaimsPrincipal(claimsIdentity));
         }
 
         public void SignOut()

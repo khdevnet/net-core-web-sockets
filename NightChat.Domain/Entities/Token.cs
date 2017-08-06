@@ -2,7 +2,7 @@
 
 namespace NightChat.Domain.Entities
 {
-    public class Token
+    internal class Token
     {
         public string UserId { get; set; }
 

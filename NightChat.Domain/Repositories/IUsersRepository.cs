@@ -1,13 +1,13 @@
-﻿using NightChat.Domain.Entities;
+﻿using NightChat.Domain.Dto;
 
 namespace NightChat.Domain.Repositories
 {
     public interface IUsersRepository
     {
-        User GetUserById(string id);
+        UserData GetUserById(string id);
 
-        void Add(User user);
+        void Add(UserData user);
 
-        void Update(User user);
+        void Update(UserData user);
     }
 }

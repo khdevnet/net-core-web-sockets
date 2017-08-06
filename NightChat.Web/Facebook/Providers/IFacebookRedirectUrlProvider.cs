@@ -1,4 +1,4 @@
-﻿namespace NightChat.WebApi.Facebook
+﻿namespace NightChat.Web.Facebook
 {
     public interface IFacebookRedirectUrlProvider
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using AspNetCoreChatRoom.Facebook;
 using Microsoft.Extensions.Options;
-using NightChat.WebApi.Common;
+using NightChat.Web.Common;
 
-namespace NightChat.WebApi.Facebook
+namespace NightChat.Web.Facebook
 {
     public class FacebookLoginUrlProvider : IFacebookLoginUrlProvider
     {

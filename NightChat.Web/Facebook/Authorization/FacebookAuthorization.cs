@@ -3,11 +3,11 @@ using System.Security.Principal;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using NightChat.Domain.Dto;
-using NightChat.WebApi.Common.Authorization;
-using NightChat.WebApi.Facebook.Models;
 using NightChat.Domain.Services;
+using NightChat.Web.Common.Authorization;
+using NightChat.Web.Facebook.Models;
 
-namespace NightChat.WebApi.Facebook.Authorization
+namespace NightChat.Web.Facebook.Authorization
 {
     public class FacebookAuthorization : IFacebookAuthorization
     {
@@ -40,7 +40,7 @@ namespace NightChat.WebApi.Facebook.Authorization
                 if (userModel != null)
                 {
                     usersService.AddOrUpdateUser(Mapper.Map<UserData>(userModel));
-                    tokensService.AddOrUpdateToken(userModel.Id, Mapper.Map<TokenData>(token));
+                    tokensService.AddOrUpdateToken(userModel.Id, token.AccessToken, token.ExpiresInSeconds);
                     formsAuthenticationService.SetAuthCookie(userModel, token);
                     return;
                 }

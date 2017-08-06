@@ -1,12 +1,11 @@
 ﻿using System.Security.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using NightChat.WebApi.Common.Authorization;
-using NightChat.WebApi.Facebook;
-using NightChat.WebApi.Facebook.Authorization;
-using NightChat.WebApi.Facebook.Models;
+using NightChat.Web.Common.Authorization;
+using NightChat.Web.Facebook;
+using NightChat.Web.Facebook.Authorization;
+using NightChat.Web.Facebook.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace NightChat.WebApi.Controllers
+namespace NightChat.Web.Controllers
 {
     [Route("[controller]/[action]")]
     public class OauthController : Controller

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using NightChat.Web.Common.Authorization;
-using NightChat.WebApi.Common.Chat;
+using NightChat.Web.Common.Chat;
 
-namespace NightChat.WebApi.Common
+namespace NightChat.Web.Common
 {
     public class ChatWebSocketMiddleware
     {

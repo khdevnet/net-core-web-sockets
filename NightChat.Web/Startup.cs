@@ -9,15 +9,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NightChat.Core;
+using NightChat.DataAccess;
 using NightChat.Domain;
 using NightChat.Domain.Dto;
+using NightChat.Web.Common;
 using NightChat.Web.Common.Authorization;
-using NightChat.WebApi.Common;
-using NightChat.WebApi.Common.Authorization;
-using NightChat.WebApi.Facebook;
-using NightChat.WebApi.Facebook.Authorization;
-using NightChat.WebApi.Facebook.Models;
-using NightChat.DataAccess;
+using NightChat.Web.Facebook;
+using NightChat.Web.Facebook.Authorization;
+using NightChat.Web.Facebook.Models;
 
 namespace NightChat.Web
 {
@@ -35,7 +35,6 @@ namespace NightChat.Web
 
         public IConfigurationRoot Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
@@ -43,12 +42,11 @@ namespace NightChat.Web
             {
                 Configuration.GetSection("FacebookOauthOptions").Bind(oauthOptions);
             });
-            // Add framework services.
+
             services.AddMvc();
             services.AddSession();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
@@ -101,6 +99,8 @@ namespace NightChat.Web
         {
             builder.RegisterModule<DataAccessAutofacModule>();
             builder.RegisterModule<DomainAutofacModule>();
+            builder.RegisterModule<CoreAutofacModule>();
+
             builder.RegisterType<FacebookHttpSender>().As<IFacebookHttpSender>();
             builder.RegisterType<FacebookAuthorization>().As<IFacebookAuthorization>();
             builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>();
@@ -116,6 +116,8 @@ namespace NightChat.Web
                 config.CreateMap<UserInfoModel, UserData>()
                 .ForCtorParam("avatar", opt => opt.MapFrom(src => src.Picture.Data.Url));
                 config.CreateMap<TokenModel, TokenData>();
+
+                config.AddProfile<DomainAutoMapperProfile>();
             });
         }
     }

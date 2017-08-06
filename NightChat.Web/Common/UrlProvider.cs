@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Primitives;
 
-namespace NightChat.WebApi.Common
+namespace NightChat.Web.Common
 {
     public class UrlProvider : IUrlProvider
     {

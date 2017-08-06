@@ -5,10 +5,10 @@ using Microsoft.Extensions.Options;
 using NightChat.Core.Http;
 using NightChat.Core.Http.Dto;
 using NightChat.Core.Http.Senders;
-using NightChat.WebApi.Common;
-using NightChat.WebApi.Facebook.Models;
+using NightChat.Web.Common;
+using NightChat.Web.Facebook.Models;
 
-namespace NightChat.WebApi.Facebook
+namespace NightChat.Web.Facebook
 {
     internal class FacebookHttpSender : IFacebookHttpSender
     {

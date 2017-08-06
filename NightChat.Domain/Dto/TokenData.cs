@@ -1,15 +1,20 @@
-﻿namespace NightChat.Domain.Dto
+﻿using System;
+
+namespace NightChat.Domain.Dto
 {
     public class TokenData
     {
-        public TokenData(string accessToken, int expiresInSeconds)
+        public TokenData(string userId, string accessToken, DateTime expiredTimestamp)
         {
+            UserId = userId;
             AccessToken = accessToken;
-            ExpiresInSeconds = expiresInSeconds;
+            ExpiredTimestamp = expiredTimestamp;
         }
+
+        public string UserId { get; }
 
         public string AccessToken { get; }
 
-        public int ExpiresInSeconds { get; }
+        public DateTime ExpiredTimestamp { get; }
     }
 }

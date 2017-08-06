@@ -1,10 +1,13 @@
 ﻿using System.Linq;
+using AutoMapper;
+using NightChat.DataAccess.DataContext;
+using NightChat.Domain.Dto;
 using NightChat.Domain.Entities;
 using NightChat.Domain.Repositories;
 
 namespace NightChat.DataAccess.Repositories
 {
-    public class TokensRepository : ITokensRepository
+    internal class TokensRepository : ITokensRepository
     {
         private readonly ISessionDataContext sessionDataContext;
 
@@ -13,26 +16,32 @@ namespace NightChat.DataAccess.Repositories
             this.sessionDataContext = sessionDataContext;
         }
 
-        public Token GetTokenByUserId(string userId)
+        public TokenData GetTokenByUserId(string userId)
         {
-            return sessionDataContext.Tokens.SingleOrDefault(t => t.UserId == userId);
+            Token token = GetTokenEntity(userId);
+            return Mapper.Map<TokenData>(token);
         }
 
-        public void Add(Token token)
+        public void Add(TokenData token)
         {
             if (GetTokenByUserId(token.UserId) == null)
             {
-                sessionDataContext.Tokens.Add(token);
+                sessionDataContext.Tokens.Add(Mapper.Map<Token>(token));
                 sessionDataContext.SaveChanges();
             }
         }
 
-        public void Update(Token token)
+        public void Update(TokenData token)
         {
-            Token tokenEntity = GetTokenByUserId(token.UserId);
+            Token tokenEntity = GetTokenEntity(token.UserId);
             tokenEntity.Value = tokenEntity.Value;
             tokenEntity.ExpiredTimestamp = tokenEntity.ExpiredTimestamp;
             sessionDataContext.SaveChanges();
+        }
+
+        private Token GetTokenEntity(string userId)
+        {
+            return sessionDataContext.Tokens.SingleOrDefault(t => t.UserId == userId);
         }
     }
 }

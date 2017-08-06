@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
 using NightChat.Web.Common.Authorization;
-using NightChat.WebApi.Facebook;
+using NightChat.Web.Facebook;
 
-namespace NightChat.WebApi.Common.Authorization
+namespace NightChat.Web.Common.Authorization
 {
     public static class CookieValidatator
     {

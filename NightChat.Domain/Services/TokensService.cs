@@ -1,12 +1,11 @@
 ﻿using System;
 using NightChat.Core.TimeProviders;
 using NightChat.Domain.Dto;
-using NightChat.Domain.Entities;
 using NightChat.Domain.Repositories;
 
 namespace NightChat.Domain.Services
 {
-    public class TokensService : ITokensService
+    internal class TokensService : ITokensService
     {
         private readonly IUsersRepository usersRepository;
         private readonly ITokensRepository tokensRepository;
@@ -21,10 +20,10 @@ namespace NightChat.Domain.Services
 
         public bool Validate(string userId)
         {
-            User user = usersRepository.GetUserById(userId);
+            UserData user = usersRepository.GetUserById(userId);
             if (user != null)
             {
-                Token token = tokensRepository.GetTokenByUserId(user.Id);
+                TokenData token = tokensRepository.GetTokenByUserId(user.Id);
 
                 if (token != null)
                 {
@@ -35,31 +34,28 @@ namespace NightChat.Domain.Services
             return false;
         }
 
-        public void AddOrUpdateToken(string userId, TokenData tokenModel)
+        public void AddOrUpdateToken(string userId, string accessToken, int expiresInSeconds)
         {
+            TokenData token = GetToken(userId, accessToken, expiresInSeconds);
+
             if (tokensRepository.GetTokenByUserId(userId) != null)
             {
-                tokensRepository.Update(GetToken(userId, tokenModel));
+                tokensRepository.Update(token);
             }
             else
             {
-                tokensRepository.Add(GetToken(userId, tokenModel));
+                tokensRepository.Add(token);
             }
         }
 
-        private static Token GetToken(string userId, TokenData tokenModel)
+        private static TokenData GetToken(string userId, string accessToken, int expiresInSeconds)
         {
-            return new Token
-            {
-                UserId = userId,
-                Value = tokenModel.AccessToken,
-                ExpiredTimestamp = GetTokenExpiredDate(tokenModel)
-            };
+            return new TokenData(userId, accessToken, GetTokenExpiredDate(expiresInSeconds));
         }
 
-        private static DateTime GetTokenExpiredDate(TokenData token)
+        private static DateTime GetTokenExpiredDate(int expiresInSeconds)
         {
-            return TimeProvider.Current.Now + TimeSpan.FromSeconds(token.ExpiresInSeconds);
+            return TimeProvider.Current.Now + TimeSpan.FromSeconds(expiresInSeconds);
         }
     }
 }

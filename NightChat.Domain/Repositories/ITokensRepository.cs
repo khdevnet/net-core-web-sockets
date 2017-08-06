@@ -1,13 +1,13 @@
-﻿using NightChat.Domain.Entities;
+﻿using NightChat.Domain.Dto;
 
 namespace NightChat.Domain.Repositories
 {
     public interface ITokensRepository
     {
-        Token GetTokenByUserId(string id);
+        TokenData GetTokenByUserId(string id);
 
-        void Add(Token token);
+        void Add(TokenData token);
 
-        void Update(Token token);
+        void Update(TokenData token);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NightChat.WebApi.Facebook.Authorization;
+using NightChat.Web.Facebook.Authorization;
 
-namespace NightChat.WebApi.Controllers
+namespace NightChat.Web.Controllers
 {
     public class ChatController : Controller
     {

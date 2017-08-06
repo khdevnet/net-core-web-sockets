@@ -1,6 +1,6 @@
 ﻿namespace NightChat.Domain.Entities
 {
-    public class User
+    internal class User
     {
         public string Id { get; set; }
 

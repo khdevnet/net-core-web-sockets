@@ -1,4 +1,4 @@
-﻿namespace NightChat.WebApi.Common.Chat
+﻿namespace NightChat.Web.Common.Chat
 {
     public class MessageResponseModel
     {

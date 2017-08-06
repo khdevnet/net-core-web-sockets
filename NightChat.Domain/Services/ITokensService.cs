@@ -1,10 +1,8 @@
-﻿using NightChat.Domain.Dto;
-
-namespace NightChat.Domain.Services
+﻿namespace NightChat.Domain.Services
 {
     public interface ITokensService
     {
-        void AddOrUpdateToken(string userId, TokenData token);
+        void AddOrUpdateToken(string userId, string accessToken, int expiresInSeconds);
 
         bool Validate(string userId);
     }

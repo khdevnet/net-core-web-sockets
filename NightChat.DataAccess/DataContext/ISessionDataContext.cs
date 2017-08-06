@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using NightChat.Domain.Entities;
 
-namespace NightChat.DataAccess
+namespace NightChat.DataAccess.DataContext
 {
-    public interface ISessionDataContext
+    internal interface ISessionDataContext
     {
         IList<User> Users { get; }
 

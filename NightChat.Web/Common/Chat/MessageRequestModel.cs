@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NightChat.WebApi.Common.Chat
+namespace NightChat.Web.Common.Chat
 {
     public class MessageRequestModel
     {

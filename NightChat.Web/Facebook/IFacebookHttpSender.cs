@@ -1,7 +1,7 @@
 ﻿using System.Net;
-using NightChat.WebApi.Facebook.Models;
+using NightChat.Web.Facebook.Models;
 
-namespace NightChat.WebApi.Facebook
+namespace NightChat.Web.Facebook
 {
     public interface IFacebookHttpSender
     {

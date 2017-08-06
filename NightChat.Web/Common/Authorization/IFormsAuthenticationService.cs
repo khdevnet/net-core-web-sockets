@@ -1,6 +1,6 @@
-﻿using NightChat.WebApi.Facebook.Models;
+﻿using NightChat.Web.Facebook.Models;
 
-namespace NightChat.WebApi.Common.Authorization
+namespace NightChat.Web.Common.Authorization
 {
     public interface IFormsAuthenticationService
     {

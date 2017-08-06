@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NightChat.WebApi.Common
+namespace NightChat.Web.Common
 {
     public interface IUrlProvider
     {

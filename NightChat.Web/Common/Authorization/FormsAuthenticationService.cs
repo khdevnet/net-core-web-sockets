@@ -1,9 +1,9 @@
-﻿using NightChat.WebApi.Facebook.Models;
+﻿using NightChat.Web.Facebook.Models;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using NightChat.Web.Common.Authorization;
 
-namespace NightChat.WebApi.Common.Authorization
+namespace NightChat.Web.Common.Authorization
 {
     public class FormsAuthenticationService : IFormsAuthenticationService
     {

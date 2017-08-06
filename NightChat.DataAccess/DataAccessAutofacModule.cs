@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using NightChat.DataAccess.DataContext;
 using NightChat.DataAccess.Repositories;
 using NightChat.Domain.Repositories;
 

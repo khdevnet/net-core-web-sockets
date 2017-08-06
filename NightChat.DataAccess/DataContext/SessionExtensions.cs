@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace AspNetCoreChatRoom.Common
+namespace NightChat.DataAccess.DataContext
 {
-    public static class SessionExtensions
+    internal static class SessionExtensions
     {
         public static void Set<T>(this ISession session, string key, T value)
         {

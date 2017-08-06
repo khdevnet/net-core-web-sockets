@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AspNetCoreChatRoom.Common;
 using Microsoft.AspNetCore.Http;
 using NightChat.Domain.Entities;
 
-namespace NightChat.DataAccess
+namespace NightChat.DataAccess.DataContext
 {
-    public class SessionDataContext : ISessionDataContext
+    internal class SessionDataContext : ISessionDataContext
     {
         private const string UsersKey = "Session_Users_Data";
         private const string TokensKey = "Session_Tokens_Data";

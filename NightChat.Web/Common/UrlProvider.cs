@@ -20,10 +20,15 @@ namespace NightChat.Web.Common
             {
                 httpValueCollection.Add(keyValue.Key, keyValue.Value);
             }
-            var s = httpValueCollection.SelectMany(x => x.Value,
-                (col, value) => new KeyValuePair<string, string>(col.Key, value)).ToList();
-            ub.Query = new QueryBuilder(s).ToQueryString().Value;
+
+            List<KeyValuePair<string, string>> parameters = GetQueryParameters(httpValueCollection);
+            ub.Query = new QueryBuilder(parameters).ToQueryString().Value;
             return ub.Uri.ToString();
+        }
+
+        private static List<KeyValuePair<string, string>> GetQueryParameters(Dictionary<string, StringValues> httpValueCollection)
+        {
+            return httpValueCollection.SelectMany(x => x.Value, (col, value) => new KeyValuePair<string, string>(col.Key, value)).ToList();
         }
     }
 }

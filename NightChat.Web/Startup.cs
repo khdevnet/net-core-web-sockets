@@ -15,6 +15,8 @@ using NightChat.Domain;
 using NightChat.Domain.Dto;
 using NightChat.Web.Common;
 using NightChat.Web.Common.Authorization;
+using NightChat.Web.Common.Chat;
+using NightChat.Web.Common.WebSockets;
 using NightChat.Web.Facebook;
 using NightChat.Web.Facebook.Authorization;
 using NightChat.Web.Facebook.Models;
@@ -85,7 +87,7 @@ namespace NightChat.Web
             };
 
             app.UseWebSockets(webSocketOptions);
-            app.UseMiddleware<ChatWebSocketMiddleware>();
+            app.UseMiddleware<WebSocketMiddleware>();
             AutoMapperConfigure();
             app.UseMvc(routes =>
             {
@@ -107,6 +109,7 @@ namespace NightChat.Web
             builder.RegisterType<UrlProvider>().As<IUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookLoginUrlProvider>().As<IFacebookLoginUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookRedirectUrlProvider>().As<IFacebookRedirectUrlProvider>().SingleInstance();
+            builder.RegisterType<ChatWebSocketMessageProcessor>().As<IWebSoketMessageProcessor>().SingleInstance();
         }
 
         private static void AutoMapperConfigure()

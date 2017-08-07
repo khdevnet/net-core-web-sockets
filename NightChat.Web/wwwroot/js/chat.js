@@ -44,8 +44,8 @@ app.chat = (function (mustache) {
             };
 
             self.$btnSend.click(function () {
-                var message = JSON.stringify({ "Message": self.$inputMsg.val() });
-                socket.send(message);
+                var request = JSON.stringify({ "MessageType": "MessageRequestModel", "Data": JSON.stringify({ "Message": self.$inputMsg.val() }) });
+                socket.send(request);
                 self.$inputMsg.val('').focus();
                 focusLastMessage();
             });

@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using NightChat.Core.Sockets;
-using NightChat.Sockets.Infrastructure.Models;
+using NightChat.Infrastructure.Models;
 
-namespace NightChat.Sockets.Infrastructure
+namespace NightChat.Infrastructure
 {
-    public class WebSocketMiddleware
+    public class WebSocketProcessingMiddleware
     {
         private static readonly ConcurrentDictionary<string, WebSocket> Sockets = new ConcurrentDictionary<string, WebSocket>();
         private readonly RequestDelegate next;
         private readonly IEnumerable<ISocketMessageProcessor> socketMessageProcessors;
 
-        public WebSocketMiddleware(RequestDelegate next, IEnumerable<ISocketMessageProcessor> socketMessageProcessors)
+        public WebSocketProcessingMiddleware(RequestDelegate next, IEnumerable<ISocketMessageProcessor> socketMessageProcessors)
         {
             this.next = next;
             this.socketMessageProcessors = socketMessageProcessors;

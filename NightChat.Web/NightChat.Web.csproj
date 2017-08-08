@@ -39,6 +39,7 @@
     <ProjectReference Include="..\NightChat.Core\NightChat.Core.csproj" />
     <ProjectReference Include="..\NightChat.DataAccess\NightChat.DataAccess.csproj" />
     <ProjectReference Include="..\NightChat.Domain\NightChat.Domain.csproj" />
+    <ProjectReference Include="..\NightChat.Infrastructure\NightChat.Infrastructure.csproj" />
     <ProjectReference Include="..\NightChat.Sockets.Infrastructure\NightChat.Sockets.Infrastructure.csproj" />
   </ItemGroup>
 

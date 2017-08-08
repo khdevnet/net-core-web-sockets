@@ -1,1 +1,1 @@
-﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("NightChat.DataAccess")]
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("NightChat.Infrastructure")]

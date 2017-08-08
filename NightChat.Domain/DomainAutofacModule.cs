@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using NightChat.Domain.Messages;
 using NightChat.Domain.Services;
 
 namespace NightChat.Domain
@@ -9,6 +10,7 @@ namespace NightChat.Domain
         {
             builder.RegisterType<TokensService>().As<ITokensService>();
             builder.RegisterType<UsersService>().As<IUsersService>();
+            builder.RegisterType<MessageProcessor>().As<IMessageProcessor>();
         }
     }
 }

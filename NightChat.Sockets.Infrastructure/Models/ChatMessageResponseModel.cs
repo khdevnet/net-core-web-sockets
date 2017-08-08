@@ -1,8 +1,8 @@
-﻿namespace NightChat.Web.Common.Chat
+﻿namespace NightChat.Sockets.Infrastructure.Models
 {
-    public class MessageResponseModel
+    public class ChatMessageResponseModel
     {
-        public MessageResponseModel(string name, string avatar, string message)
+        public ChatMessageResponseModel(string name, string avatar, string message)
         {
             Avatar = avatar;
             Name = name;

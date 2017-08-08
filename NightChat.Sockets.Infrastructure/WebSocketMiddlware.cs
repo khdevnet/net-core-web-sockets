@@ -9,19 +9,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using NightChat.Core.Sockets;
+using NightChat.Sockets.Infrastructure.Models;
 
-namespace NightChat.Web.Common.WebSockets
+namespace NightChat.Sockets.Infrastructure
 {
     public class WebSocketMiddleware
     {
         private static readonly ConcurrentDictionary<string, WebSocket> Sockets = new ConcurrentDictionary<string, WebSocket>();
         private readonly RequestDelegate next;
-        private readonly IEnumerable<IWebSoketMessageProcessor> webSoketProcessors;
+        private readonly IEnumerable<ISocketMessageProcessor> socketMessageProcessors;
 
-        public WebSocketMiddleware(RequestDelegate next, IEnumerable<IWebSoketMessageProcessor> webSoketProcessors)
+        public WebSocketMiddleware(RequestDelegate next, IEnumerable<ISocketMessageProcessor> socketMessageProcessors)
         {
             this.next = next;
-            this.webSoketProcessors = webSoketProcessors;
+            this.socketMessageProcessors = socketMessageProcessors;
         }
 
         public async Task Invoke(HttpContext context)
@@ -63,7 +65,7 @@ namespace NightChat.Web.Common.WebSockets
                         {
                             continue;
                         }
-                        string responseMessage = GetResponseMessage(context, response);
+                        string responseMessage = GetResponseMessage(response);
 
                         await SendStringAsync(socket.Value, responseMessage, ct);
                     }
@@ -76,14 +78,14 @@ namespace NightChat.Web.Common.WebSockets
             }
         }
 
-        private string GetResponseMessage(HttpContext context, string request)
+        private string GetResponseMessage(string request)
         {
-            WebSocketRequestModel requestModel = JsonConvert.DeserializeObject<WebSocketRequestModel>(request);
-            IWebSoketMessageProcessor processor = webSoketProcessors.SingleOrDefault(p => p.MessageType == requestModel.MessageType);
+            SocketRequestModel requestModel = JsonConvert.DeserializeObject<SocketRequestModel>(request);
+            ISocketMessageProcessor processor = socketMessageProcessors.SingleOrDefault(p => p.MessageType == requestModel.MessageType);
             if (processor != null)
             {
-                object requestData = JsonConvert.DeserializeObject(requestModel.Data, processor.DataType);
-                object result = processor.Process(context, requestData);
+                object requestData = JsonConvert.DeserializeObject(requestModel.Data, processor.MessageDataType);
+                object result = processor.Process(requestData);
                 return JsonConvert.SerializeObject(result);
             }
 

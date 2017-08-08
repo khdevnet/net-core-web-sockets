@@ -1,6 +1,6 @@
 ﻿var app = app || {}
 
-app.chat = (function (mustache) {
+app.chat = (function (mustache, socketFactory) {
 
     function renderMessage(message) {
         var template = $('#message-template').html();
@@ -12,6 +12,12 @@ app.chat = (function (mustache) {
         $("html, body").animate({ scrollTop: $(document).height() }, 1000);
     }
 
+    function getWsUri() {
+        var protocol = location.protocol === "https:" ? "wss:" : "ws:";
+        var port = document.location.port ? (":" + document.location.port) : "";
+        return protocol + "//" + window.location.hostname + port;
+    }
+
     return {
         $inputMsg: undefined,
         $btnSend: undefined,
@@ -21,31 +27,17 @@ app.chat = (function (mustache) {
             self.$inputMsg = $('.input-sm');
             self.$btnSend = $('#btn-chat');
             self.$chatArea = $('.chat');
-            var protocol = location.protocol === "https:" ? "wss:" : "ws:";
-            var port = document.location.port ? (":" + document.location.port) : "";
-            var wsUri = protocol + "//" + window.location.hostname + port;
-            var socket = new WebSocket(wsUri);
-            socket.onopen = e => {
-                console.log("socket opened", e);
-            };
 
-            socket.onclose = function (e) {
-                console.log("socket closed", e);
-            };
+            var socket = socketFactory.create(getWsUri(), "MessageRequestModel");
 
-            socket.onmessage = function (e) {
-                console.log(e);
-                self.$chatArea.append(renderMessage(JSON.parse(e.data)));
+            socket.onMessage(function (data) {
+                console.log(data);
+                self.$chatArea.append(renderMessage(data));
                 focusLastMessage();
-            };
-
-            socket.onerror = function (e) {
-                console.error(e.data);
-            };
+            });
 
             self.$btnSend.click(function () {
-                var request = JSON.stringify({ "MessageType": "MessageRequestModel", "Data": JSON.stringify({ "Message": self.$inputMsg.val() }) });
-                socket.send(request);
+                socket.send({ "Message": self.$inputMsg.val() });
                 self.$inputMsg.val('').focus();
                 focusLastMessage();
             });
@@ -59,4 +51,4 @@ app.chat = (function (mustache) {
             });
         }
     }
-})(Mustache);
+})(Mustache, utils.soketFactory);

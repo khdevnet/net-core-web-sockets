@@ -1,7 +1,6 @@
 ﻿using NightChat.Web.Facebook.Models;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
-using NightChat.Web.Common.Authorization;
 
 namespace NightChat.Web.Common.Authorization
 {

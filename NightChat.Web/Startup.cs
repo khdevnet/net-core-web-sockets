@@ -13,10 +13,9 @@ using NightChat.Core;
 using NightChat.DataAccess;
 using NightChat.Domain;
 using NightChat.Domain.Dto;
+using NightChat.Sockets.Infrastructure;
 using NightChat.Web.Common;
 using NightChat.Web.Common.Authorization;
-using NightChat.Web.Common.Chat;
-using NightChat.Web.Common.WebSockets;
 using NightChat.Web.Facebook;
 using NightChat.Web.Facebook.Authorization;
 using NightChat.Web.Facebook.Models;
@@ -102,6 +101,7 @@ namespace NightChat.Web
             builder.RegisterModule<DataAccessAutofacModule>();
             builder.RegisterModule<DomainAutofacModule>();
             builder.RegisterModule<CoreAutofacModule>();
+            builder.RegisterModule<SocketsInfrastructureAutofacModule>();
 
             builder.RegisterType<FacebookHttpSender>().As<IFacebookHttpSender>();
             builder.RegisterType<FacebookAuthorization>().As<IFacebookAuthorization>();
@@ -109,7 +109,7 @@ namespace NightChat.Web
             builder.RegisterType<UrlProvider>().As<IUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookLoginUrlProvider>().As<IFacebookLoginUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookRedirectUrlProvider>().As<IFacebookRedirectUrlProvider>().SingleInstance();
-            builder.RegisterType<ChatWebSocketMessageProcessor>().As<IWebSoketMessageProcessor>().SingleInstance();
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
         }
 
         private static void AutoMapperConfigure()

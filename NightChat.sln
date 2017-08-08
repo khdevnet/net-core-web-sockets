@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NightChat.Core", "NightChat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NightChat.Domain", "NightChat.Domain\NightChat.Domain.csproj", "{A6217203-672F-4FCF-B10A-74B743CD7FFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NightChat.Sockets.Infrastructure", "NightChat.Sockets.Infrastructure\NightChat.Sockets.Infrastructure.csproj", "{EC15F50D-FEB8-444B-A4DE-D59F429F5CD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A6217203-672F-4FCF-B10A-74B743CD7FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6217203-672F-4FCF-B10A-74B743CD7FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6217203-672F-4FCF-B10A-74B743CD7FFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC15F50D-FEB8-444B-A4DE-D59F429F5CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC15F50D-FEB8-444B-A4DE-D59F429F5CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC15F50D-FEB8-444B-A4DE-D59F429F5CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC15F50D-FEB8-444B-A4DE-D59F429F5CD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

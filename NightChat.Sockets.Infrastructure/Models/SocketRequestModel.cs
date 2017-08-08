@@ -1,6 +1,6 @@
-﻿namespace NightChat.Web.Common.WebSockets
+﻿namespace NightChat.Sockets.Infrastructure.Models
 {
-    public class WebSocketRequestModel
+    public class SocketRequestModel
     {
         public string MessageType { get; set; }
 

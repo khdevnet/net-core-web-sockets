@@ -1,4 +1,4 @@
-﻿namespace NightChat.Web.Common.Authorization
+﻿namespace NightChat.Web.Application.Authorization
 {
     public static class AuthorizationConstants
     {

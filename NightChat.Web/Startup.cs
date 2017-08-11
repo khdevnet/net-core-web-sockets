@@ -1,5 +1,4 @@
 ﻿using System;
-using AspNetCoreChatRoom.Facebook;
 using Autofac;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -10,15 +9,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NightChat.Core;
+using NightChat.Core.Sockets;
 using NightChat.Domain;
 using NightChat.Domain.Dto;
 using NightChat.Web.Common;
-using NightChat.Web.Common.Authorization;
-using NightChat.Web.Facebook;
-using NightChat.Web.Facebook.Authorization;
-using NightChat.Web.Facebook.Models;
+using NightChat.Web.Application.Authorization;
+using NightChat.Web.Application.Authorization.Facebook;
+using NightChat.Web.Application.Authorization.Facebook;
+using NightChat.Web.Application.Authorization.Facebook.Models;
 using NightChat.DataAccess;
 using NightChat.Infrastructure;
+using NightChat.Web.Application.Authorization.Facebook.Providers;
+using NightChat.Web.Application.Sockets;
 
 namespace NightChat.Web
 {
@@ -101,11 +103,11 @@ namespace NightChat.Web
             builder.RegisterModule<DataAccessAutofacModule>();
             builder.RegisterModule<DomainAutofacModule>();
             builder.RegisterModule<CoreAutofacModule>();
-            builder.RegisterModule<SocketsInfrastructureAutofacModule>();
-
+            builder.RegisterType<SocketMessageProcessor>().As<ISocketMessageProcessor>();
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             builder.RegisterType<FacebookHttpSender>().As<IFacebookHttpSender>();
             builder.RegisterType<FacebookAuthorization>().As<IFacebookAuthorization>();
-            builder.RegisterType<FormsAuthenticationService>().As<IFormsAuthenticationService>();
+            builder.RegisterType<CookieAuthenticationService>().As<ICookieAuthenticationService>();
             builder.RegisterType<UrlProvider>().As<IUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookLoginUrlProvider>().As<IFacebookLoginUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookRedirectUrlProvider>().As<IFacebookRedirectUrlProvider>().SingleInstance();

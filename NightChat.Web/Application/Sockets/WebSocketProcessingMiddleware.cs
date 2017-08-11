@@ -11,19 +11,25 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using NightChat.Core.Sockets;
 using NightChat.Infrastructure.Models;
+using NightChat.Web.Application.Authorization;
 
-namespace NightChat.Infrastructure
+namespace NightChat.Web.Application.Sockets
 {
     public class WebSocketProcessingMiddleware
     {
         private static readonly ConcurrentDictionary<string, WebSocket> Sockets = new ConcurrentDictionary<string, WebSocket>();
         private readonly RequestDelegate next;
         private readonly IEnumerable<ISocketMessageProcessor> socketMessageProcessors;
+        private readonly ICookieAuthenticationService cookieAuthenticationService;
 
-        public WebSocketProcessingMiddleware(RequestDelegate next, IEnumerable<ISocketMessageProcessor> socketMessageProcessors)
+        public WebSocketProcessingMiddleware(
+            RequestDelegate next,
+            IEnumerable<ISocketMessageProcessor> socketMessageProcessors,
+            ICookieAuthenticationService cookieAuthenticationService)
         {
             this.next = next;
             this.socketMessageProcessors = socketMessageProcessors;
+            this.cookieAuthenticationService = cookieAuthenticationService;
         }
 
         public async Task Invoke(HttpContext context)
@@ -53,6 +59,7 @@ namespace NightChat.Infrastructure
                     {
                         if (currentSocket.State != WebSocketState.Open)
                         {
+                            cookieAuthenticationService.SignOut();
                             break;
                         }
 
@@ -63,6 +70,7 @@ namespace NightChat.Infrastructure
                     {
                         if (socket.Value.State != WebSocketState.Open)
                         {
+                            cookieAuthenticationService.SignOut();
                             continue;
                         }
                         string responseMessage = GetResponseMessage(response);

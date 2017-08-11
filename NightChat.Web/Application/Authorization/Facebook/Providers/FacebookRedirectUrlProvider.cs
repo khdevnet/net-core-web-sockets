@@ -1,8 +1,7 @@
-﻿using AspNetCoreChatRoom.Facebook;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using NightChat.Web.Controllers;
 
-namespace NightChat.Web.Facebook
+namespace NightChat.Web.Application.Authorization.Facebook.Providers
 {
     public class FacebookRedirectUrlProvider : IFacebookRedirectUrlProvider
     {

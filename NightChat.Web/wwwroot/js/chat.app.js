@@ -28,7 +28,7 @@ app.chat = (function (mustache, socketFactory) {
             self.$btnSend = $('#btn-chat');
             self.$chatArea = $('.chat');
 
-            var socket = socketFactory.create(getWsUri(), "MessageRequestModel");
+            var socket = socketFactory.create(getWsUri(), "SendMessageModel");
 
             socket.onMessage(function (data) {
                 console.log(data);

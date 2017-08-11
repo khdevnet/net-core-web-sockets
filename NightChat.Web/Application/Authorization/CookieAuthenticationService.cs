@@ -1,14 +1,14 @@
-﻿using NightChat.Web.Facebook.Models;
+﻿using NightChat.Web.Application.Authorization.Facebook.Models;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
-namespace NightChat.Web.Common.Authorization
+namespace NightChat.Web.Application.Authorization
 {
-    public class FormsAuthenticationService : IFormsAuthenticationService
+    public class CookieAuthenticationService : ICookieAuthenticationService
     {
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public FormsAuthenticationService(IHttpContextAccessor httpContextAccessor)
+        public CookieAuthenticationService(IHttpContextAccessor httpContextAccessor)
         {
             this.httpContextAccessor = httpContextAccessor;
         }

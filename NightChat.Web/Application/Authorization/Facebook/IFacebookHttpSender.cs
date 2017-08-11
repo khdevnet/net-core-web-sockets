@@ -1,7 +1,7 @@
 ﻿using System.Net;
-using NightChat.Web.Facebook.Models;
+using NightChat.Web.Application.Authorization.Facebook.Models;
 
-namespace NightChat.Web.Facebook
+namespace NightChat.Web.Application.Authorization.Facebook
 {
     public interface IFacebookHttpSender
     {

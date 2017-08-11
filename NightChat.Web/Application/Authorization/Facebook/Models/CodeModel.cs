@@ -1,4 +1,4 @@
-﻿namespace NightChat.Web.Facebook.Models
+﻿namespace NightChat.Web.Application.Authorization.Facebook.Models
 {
     public class CodeModel
     {

@@ -1,9 +1,10 @@
 ﻿using System.Security.Authentication;
-using NightChat.Web.Common.Authorization;
-using NightChat.Web.Facebook;
-using NightChat.Web.Facebook.Authorization;
-using NightChat.Web.Facebook.Models;
+using NightChat.Web.Application.Authorization;
+using NightChat.Web.Application.Authorization.Facebook;
+using NightChat.Web.Application.Authorization.Facebook;
+using NightChat.Web.Application.Authorization.Facebook.Models;
 using Microsoft.AspNetCore.Mvc;
+using NightChat.Web.Application.Authorization.Facebook.Providers;
 
 namespace NightChat.Web.Controllers
 {
@@ -12,12 +13,12 @@ namespace NightChat.Web.Controllers
     {
         private readonly IFacebookLoginUrlProvider facebookLoginUrlProvider;
         private readonly IFacebookAuthorization facebookAuthorization;
-        private readonly IFormsAuthenticationService formsAuthenticationService;
+        private readonly ICookieAuthenticationService formsAuthenticationService;
 
         public OauthController(
            IFacebookLoginUrlProvider facebookLoginUrlProvider,
            IFacebookAuthorization facebookAuthorization,
-           IFormsAuthenticationService formsAuthenticationService)
+           ICookieAuthenticationService formsAuthenticationService)
         {
             this.facebookLoginUrlProvider = facebookLoginUrlProvider;
             this.facebookAuthorization = facebookAuthorization;

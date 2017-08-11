@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using AspNetCoreChatRoom.Facebook;
 using Microsoft.Extensions.Options;
 using NightChat.Core.Http;
 using NightChat.Core.Http.Dto;
 using NightChat.Core.Http.Senders;
 using NightChat.Web.Common;
-using NightChat.Web.Facebook.Models;
+using NightChat.Web.Application.Authorization.Facebook.Models;
+using NightChat.Web.Application.Authorization.Facebook.Providers;
 
-namespace NightChat.Web.Facebook
+namespace NightChat.Web.Application.Authorization.Facebook
 {
     internal class FacebookHttpSender : IFacebookHttpSender
     {

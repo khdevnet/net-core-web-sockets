@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreChatRoom.Facebook
+﻿namespace NightChat.Web.Application.Authorization.Facebook
 {
     public class FacebookOauthOptions
     {

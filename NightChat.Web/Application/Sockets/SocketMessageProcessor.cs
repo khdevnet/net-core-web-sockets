@@ -6,7 +6,7 @@ using NightChat.Infrastructure.Models;
 using NightChat.Core.Sockets;
 using NightChat.Domain.Messages;
 
-namespace NightChat.Infrastructure
+namespace NightChat.Web.Application.Sockets
 {
     internal class SocketMessageProcessor : SocketMessageProcessorBase<SendMessageModel, ReceiveMessageModel>
     {

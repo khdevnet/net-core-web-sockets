@@ -1,4 +1,4 @@
-﻿namespace NightChat.Web.Application.Authorization.Facebook
+﻿namespace NightChat.Web.Application.Authentication.Facebook
 {
     public class FacebookOauthOptions
     {

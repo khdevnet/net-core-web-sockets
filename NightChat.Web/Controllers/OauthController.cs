@@ -1,10 +1,10 @@
 ﻿using System.Security.Authentication;
-using NightChat.Web.Application.Authorization;
-using NightChat.Web.Application.Authorization.Facebook;
-using NightChat.Web.Application.Authorization.Facebook;
-using NightChat.Web.Application.Authorization.Facebook.Models;
+using NightChat.Web.Application.Authentication;
+using NightChat.Web.Application.Authentication.Facebook;
+using NightChat.Web.Application.Authentication.Facebook;
+using NightChat.Web.Application.Authentication.Facebook.Models;
 using Microsoft.AspNetCore.Mvc;
-using NightChat.Web.Application.Authorization.Facebook.Providers;
+using NightChat.Web.Application.Authentication.Facebook.Providers;
 
 namespace NightChat.Web.Controllers
 {
@@ -12,16 +12,16 @@ namespace NightChat.Web.Controllers
     public class OauthController : Controller
     {
         private readonly IFacebookLoginUrlProvider facebookLoginUrlProvider;
-        private readonly IFacebookAuthorization facebookAuthorization;
+        private readonly IFacebookAuthentication facebookAuthentication;
         private readonly ICookieAuthenticationService formsAuthenticationService;
 
         public OauthController(
            IFacebookLoginUrlProvider facebookLoginUrlProvider,
-           IFacebookAuthorization facebookAuthorization,
+           IFacebookAuthentication facebookAuthentication,
            ICookieAuthenticationService formsAuthenticationService)
         {
             this.facebookLoginUrlProvider = facebookLoginUrlProvider;
-            this.facebookAuthorization = facebookAuthorization;
+            this.facebookAuthentication = facebookAuthentication;
             this.formsAuthenticationService = formsAuthenticationService;
         }
 
@@ -36,7 +36,7 @@ namespace NightChat.Web.Controllers
         {
             try
             {
-                facebookAuthorization.Authorize(codeModel);
+                facebookAuthentication.Authorize(codeModel);
             }
             catch (AuthenticationException)
             {

@@ -3,10 +3,10 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
-using NightChat.Web.Application.Authorization;
-using NightChat.Web.Application.Authorization.Facebook;
+using NightChat.Web.Application.Authentication;
+using NightChat.Web.Application.Authentication.Facebook;
 
-namespace NightChat.Web.Application.Authorization
+namespace NightChat.Web.Application.Authentication
 {
     public static class CookieValidatator
     {
@@ -15,18 +15,18 @@ namespace NightChat.Web.Application.Authorization
             ClaimsPrincipal userPrincipal = context.Principal;
             if (!userPrincipal.Identity.IsAuthenticated)
             {
-                await context.HttpContext.Authentication.SignOutAsync(AuthorizationConstants.AuthCookieName);
+                await context.HttpContext.Authentication.SignOutAsync(AuthenticationConstants.AuthCookieName);
             }
 
             var sender = context.HttpContext.RequestServices.GetRequiredService<IFacebookHttpSender>();
-            var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == AuthorizationConstants.TokenClaimName);
+            var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == AuthenticationConstants.TokenClaimName);
 
             if (claim != null)
             {
                 var r = sender.InspectToken(claim.Value);
                 if (r != System.Net.HttpStatusCode.OK)
                 {
-                    await context.HttpContext.Authentication.SignOutAsync(AuthorizationConstants.AuthCookieName);
+                    await context.HttpContext.Authentication.SignOutAsync(AuthenticationConstants.AuthCookieName);
                 }
             }
         }

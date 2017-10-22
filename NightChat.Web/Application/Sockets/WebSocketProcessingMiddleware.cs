@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using NightChat.Core.Sockets;
 using NightChat.Infrastructure.Models;
-using NightChat.Web.Application.Authorization;
+using NightChat.Web.Application.Authentication;
 
 namespace NightChat.Web.Application.Sockets
 {

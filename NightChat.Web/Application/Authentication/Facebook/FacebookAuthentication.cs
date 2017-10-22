@@ -4,11 +4,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using NightChat.Domain.Dto;
 using NightChat.Domain.Services;
-using NightChat.Web.Application.Authorization.Facebook.Models;
+using NightChat.Web.Application.Authentication.Facebook.Models;
 
-namespace NightChat.Web.Application.Authorization.Facebook
+namespace NightChat.Web.Application.Authentication.Facebook
 {
-    public class FacebookAuthorization : IFacebookAuthorization
+    public class FacebookAuthentication : IFacebookAuthentication
     {
         private readonly IFacebookHttpSender facebookHttpSender;
         private readonly IUsersService usersService;
@@ -16,7 +16,7 @@ namespace NightChat.Web.Application.Authorization.Facebook
         private readonly ICookieAuthenticationService formsAuthenticationService;
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public FacebookAuthorization(
+        public FacebookAuthentication(
             IFacebookHttpSender facebookHttpSender,
             IUsersService usersService,
             ITokensService tokensService,

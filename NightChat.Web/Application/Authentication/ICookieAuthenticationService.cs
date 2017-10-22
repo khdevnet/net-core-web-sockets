@@ -1,6 +1,6 @@
-﻿using NightChat.Web.Application.Authorization.Facebook.Models;
+﻿using NightChat.Web.Application.Authentication.Facebook.Models;
 
-namespace NightChat.Web.Application.Authorization
+namespace NightChat.Web.Application.Authentication
 {
     public interface ICookieAuthenticationService
     {

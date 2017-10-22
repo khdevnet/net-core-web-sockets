@@ -1,8 +1,8 @@
-﻿using NightChat.Web.Application.Authorization.Facebook.Models;
+﻿using NightChat.Web.Application.Authentication.Facebook.Models;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
-namespace NightChat.Web.Application.Authorization
+namespace NightChat.Web.Application.Authentication
 {
     public class CookieAuthenticationService : ICookieAuthenticationService
     {
@@ -16,15 +16,15 @@ namespace NightChat.Web.Application.Authorization
         public void SetAuthCookie(UserInfoModel model, TokenModel token)
         {
             var identity = new UserIdentity("Facebook", true, model.Name, model.Id);
-            var tokenClaim = new Claim(AuthorizationConstants.TokenClaimName, token.AccessToken);
-            var avatarClaim = new Claim(AuthorizationConstants.AvatarClaimName, model.Picture.Data.Url);
+            var tokenClaim = new Claim(AuthenticationConstants.TokenClaimName, token.AccessToken);
+            var avatarClaim = new Claim(AuthenticationConstants.AvatarClaimName, model.Picture.Data.Url);
             var claimsIdentity = new ClaimsIdentity(identity, new[] { tokenClaim, avatarClaim });
-           httpContextAccessor.HttpContext.Authentication.SignInAsync(AuthorizationConstants.AuthCookieName, new ClaimsPrincipal(claimsIdentity));
+           httpContextAccessor.HttpContext.Authentication.SignInAsync(AuthenticationConstants.AuthCookieName, new ClaimsPrincipal(claimsIdentity));
         }
 
         public void SignOut()
         {
-            httpContextAccessor.HttpContext.Authentication.SignOutAsync(AuthorizationConstants.AuthCookieName);
+            httpContextAccessor.HttpContext.Authentication.SignOutAsync(AuthenticationConstants.AuthCookieName);
         }
     }
 }

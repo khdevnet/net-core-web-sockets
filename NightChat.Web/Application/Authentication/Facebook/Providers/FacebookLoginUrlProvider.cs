@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using NightChat.Web.Common;
 
-namespace NightChat.Web.Application.Authorization.Facebook.Providers
+namespace NightChat.Web.Application.Authentication.Facebook.Providers
 {
     public class FacebookLoginUrlProvider : IFacebookLoginUrlProvider
     {

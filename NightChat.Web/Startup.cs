@@ -13,13 +13,13 @@ using NightChat.Core.Sockets;
 using NightChat.Domain;
 using NightChat.Domain.Dto;
 using NightChat.Web.Common;
-using NightChat.Web.Application.Authorization;
-using NightChat.Web.Application.Authorization.Facebook;
-using NightChat.Web.Application.Authorization.Facebook;
-using NightChat.Web.Application.Authorization.Facebook.Models;
+using NightChat.Web.Application.Authentication;
+using NightChat.Web.Application.Authentication.Facebook;
+using NightChat.Web.Application.Authentication.Facebook;
+using NightChat.Web.Application.Authentication.Facebook.Models;
 using NightChat.DataAccess;
 using NightChat.Infrastructure;
-using NightChat.Web.Application.Authorization.Facebook.Providers;
+using NightChat.Web.Application.Authentication.Facebook.Providers;
 using NightChat.Web.Application.Sockets;
 
 namespace NightChat.Web
@@ -70,7 +70,7 @@ namespace NightChat.Web
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationScheme = AuthorizationConstants.AuthCookieName,
+                AuthenticationScheme = AuthenticationConstants.AuthCookieName,
                 LoginPath = new PathString("/chat/login"),
                 AccessDeniedPath = new PathString("/chat/NotAuthorized"),
                 AutomaticAuthenticate = true,
@@ -106,7 +106,7 @@ namespace NightChat.Web
             builder.RegisterType<SocketMessageProcessor>().As<ISocketMessageProcessor>();
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             builder.RegisterType<FacebookHttpSender>().As<IFacebookHttpSender>();
-            builder.RegisterType<FacebookAuthorization>().As<IFacebookAuthorization>();
+            builder.RegisterType<FacebookAuthentication>().As<IFacebookAuthentication>();
             builder.RegisterType<CookieAuthenticationService>().As<ICookieAuthenticationService>();
             builder.RegisterType<UrlProvider>().As<IUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookLoginUrlProvider>().As<IFacebookLoginUrlProvider>().SingleInstance();

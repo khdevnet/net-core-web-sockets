@@ -1,6 +1,6 @@
 ﻿using System.Security.Principal;
 
-namespace NightChat.Web.Application.Authorization
+namespace NightChat.Web.Application.Authentication
 {
     public class UserIdentity : IIdentity
     {

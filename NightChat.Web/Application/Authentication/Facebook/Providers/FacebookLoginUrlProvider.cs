@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 
-namespace NightChat.Web.Application.Authorization.Facebook.Providers
+namespace NightChat.Web.Application.Authentication.Facebook.Providers
 {
     public class FacebookLoginUrlProvider : IFacebookLoginUrlProvider
     {

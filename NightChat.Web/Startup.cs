@@ -103,7 +103,7 @@ namespace NightChat.Web
             builder.RegisterType<SocketMessageProcessor>().As<ISocketMessageProcessor>();
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             builder.RegisterType<FacebookHttpSender>().As<IFacebookHttpSender>();
-            builder.RegisterType<FacebookAuthorization>().As<IFacebookAuthorization>();
+            builder.RegisterType<FacebookAuthentication>().As<IFacebookAuthentication>();
             builder.RegisterType<CookieAuthenticationService>().As<ICookieAuthenticationService>();
             builder.RegisterType<UrlProvider>().As<IUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookLoginUrlProvider>().As<IFacebookLoginUrlProvider>().SingleInstance();

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using NightChat.Web.Application.Authorization.Facebook.Models;
 
-namespace NightChat.Web.Application.Authorization
+namespace NightChat.Web.Application.Authentication
 {
     public class CookieAuthenticationService : ICookieAuthenticationService
     {

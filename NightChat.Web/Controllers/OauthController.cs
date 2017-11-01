@@ -11,16 +11,16 @@ namespace NightChat.Web.Controllers
     public class OauthController : Controller
     {
         private readonly IFacebookLoginUrlProvider facebookLoginUrlProvider;
-        private readonly IFacebookAuthorization facebookAuthorization;
+        private readonly IFacebookAuthentication facebookAuthentication;
         private readonly ICookieAuthenticationService formsAuthenticationService;
 
         public OauthController(
            IFacebookLoginUrlProvider facebookLoginUrlProvider,
-           IFacebookAuthorization facebookAuthorization,
+           IFacebookAuthentication facebookAuthentication,
            ICookieAuthenticationService formsAuthenticationService)
         {
             this.facebookLoginUrlProvider = facebookLoginUrlProvider;
-            this.facebookAuthorization = facebookAuthorization;
+            this.facebookAuthentication = facebookAuthentication;
             this.formsAuthenticationService = formsAuthenticationService;
         }
 
@@ -35,7 +35,7 @@ namespace NightChat.Web.Controllers
         {
             try
             {
-                facebookAuthorization.Authorize(codeModel);
+                facebookAuthentication.Authorize(codeModel);
             }
             catch (AuthenticationException)
             {

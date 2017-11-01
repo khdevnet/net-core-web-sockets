@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace NightChat.Web.Application.Authorization.Facebook.Models
+namespace NightChat.Web.Application.Authentication.Facebook.Models
 {
     public class TokenModel
     {

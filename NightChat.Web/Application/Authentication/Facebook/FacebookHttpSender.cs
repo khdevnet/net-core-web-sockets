@@ -7,7 +7,7 @@ using NightChat.Core.Http.Senders;
 using NightChat.Web.Application.Authorization.Facebook.Models;
 using NightChat.Web.Application.Authorization.Facebook.Providers;
 
-namespace NightChat.Web.Application.Authorization.Facebook
+namespace NightChat.Web.Application.Authentication.Facebook
 {
     internal class FacebookHttpSender : IFacebookHttpSender
     {

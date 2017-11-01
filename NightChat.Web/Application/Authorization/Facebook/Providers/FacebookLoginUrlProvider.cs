@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Extensions.Options;
-using NightChat.Web.Common;
 
 namespace NightChat.Web.Application.Authorization.Facebook.Providers
 {

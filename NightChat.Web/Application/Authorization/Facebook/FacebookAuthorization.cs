@@ -32,10 +32,10 @@ namespace NightChat.Web.Application.Authorization.Facebook
 
         public void Authorize(CodeModel codeModel)
         {
-            TokenModel token = facebookHttpSender.GetToken(codeModel.Code);
+            var token = facebookHttpSender.GetToken(codeModel.Code);
             if (token != null)
             {
-                UserInfoModel userModel = facebookHttpSender.GetUserDetails(token.AccessToken);
+                var userModel = facebookHttpSender.GetUserDetails(token.AccessToken);
                 if (userModel != null)
                 {
                     usersService.AddOrUpdateUser(Mapper.Map<UserData>(userModel));

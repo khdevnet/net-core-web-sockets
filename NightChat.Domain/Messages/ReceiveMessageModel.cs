@@ -1,4 +1,4 @@
-﻿namespace NightChat.Infrastructure.Models
+﻿namespace NightChat.Domain.Messages
 {
     public class ReceiveMessageModel
     {

@@ -2,7 +2,6 @@
 using NightChat.Domain.Dto;
 using NightChat.Domain.Entities;
 
-
 namespace NightChat.Domain
 {
     public class DomainAutoMapperProfile : Profile

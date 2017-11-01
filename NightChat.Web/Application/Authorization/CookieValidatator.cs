@@ -1,9 +1,8 @@
 ﻿using System.Linq;
-using System.Security.Claims;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
-using NightChat.Web.Application.Authorization;
 using NightChat.Web.Application.Authorization.Facebook;
 
 namespace NightChat.Web.Application.Authorization
@@ -12,21 +11,21 @@ namespace NightChat.Web.Application.Authorization
     {
         public static async Task ValidateAsync(CookieValidatePrincipalContext context)
         {
-            ClaimsPrincipal userPrincipal = context.Principal;
+            var userPrincipal = context.Principal;
             if (!userPrincipal.Identity.IsAuthenticated)
             {
-                await context.HttpContext.Authentication.SignOutAsync(AuthorizationConstants.AuthCookieName);
+                await context.HttpContext.Authentication.SignOutAsync(Constants.AuthCookieName);
             }
 
-            var sender = context.HttpContext.RequestServices.GetRequiredService<IFacebookHttpSender>();
-            var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == AuthorizationConstants.TokenClaimName);
+            var facebookHttpSender = context.HttpContext.RequestServices.GetRequiredService<IFacebookHttpSender>();
+            var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == Constants.TokenClaimName);
 
             if (claim != null)
             {
-                var r = sender.InspectToken(claim.Value);
-                if (r != System.Net.HttpStatusCode.OK)
+                var statusCode = facebookHttpSender.InspectToken(claim.Value);
+                if (statusCode != HttpStatusCode.OK)
                 {
-                    await context.HttpContext.Authentication.SignOutAsync(AuthorizationConstants.AuthCookieName);
+                    await context.HttpContext.Authentication.SignOutAsync(Constants.AuthCookieName);
                 }
             }
         }

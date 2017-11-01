@@ -4,7 +4,6 @@ using Microsoft.Extensions.Options;
 using NightChat.Core.Http;
 using NightChat.Core.Http.Dto;
 using NightChat.Core.Http.Senders;
-using NightChat.Web.Common;
 using NightChat.Web.Application.Authorization.Facebook.Models;
 using NightChat.Web.Application.Authorization.Facebook.Providers;
 
@@ -34,20 +33,20 @@ namespace NightChat.Web.Application.Authorization.Facebook
 
         public UserInfoModel GetUserDetails(string token)
         {
-            HttpMessageSenderResponse response = httpMessageSender.Get(urlProvider.GetUrlQuery(GetMeUrl, GetUserInfoUrlQuery(token)), GetHeader());
+            var response = httpMessageSender.Get(urlProvider.GetUrlQuery(GetMeUrl, GetUserInfoUrlQuery(token)), GetHeader());
             return IsResponseOk(response) ? response.Response.Content.Read<UserInfoModel>() : null;
         }
 
         public TokenModel GetToken(string code)
         {
-            HttpMessageSenderResponse response = httpMessageSender.Get(urlProvider.GetUrlQuery(GetAcessTokenUrl, GetTokenUrlQuery(code)));
+            var response = httpMessageSender.Get(urlProvider.GetUrlQuery(GetAcessTokenUrl, GetTokenUrlQuery(code)));
             return IsResponseOk(response) ? response.Response.Content.Read<TokenModel>() : null;
         }
 
         public HttpStatusCode InspectToken(string token)
         {
-            HttpMessageSenderResponse response = httpMessageSender.Get(urlProvider.GetUrlQuery(InspectTokenUrl, GetInspectTokenUrlQuery(token)));
-            return response.StatusCode.HasValue ? response.StatusCode.Value : HttpStatusCode.BadRequest;
+            var response = httpMessageSender.Get(urlProvider.GetUrlQuery(InspectTokenUrl, GetInspectTokenUrlQuery(token)));
+            return response.StatusCode ?? HttpStatusCode.BadRequest;
         }
 
         private static bool IsResponseOk(HttpMessageSenderResponse response)

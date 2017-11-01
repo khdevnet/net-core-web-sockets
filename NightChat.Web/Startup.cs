@@ -9,16 +9,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NightChat.Core;
-using NightChat.Core.Sockets;
+using NightChat.DataAccess;
 using NightChat.Domain;
 using NightChat.Domain.Dto;
-using NightChat.Web.Common;
+using NightChat.Web.Application;
 using NightChat.Web.Application.Authorization;
 using NightChat.Web.Application.Authorization.Facebook;
-using NightChat.Web.Application.Authorization.Facebook;
 using NightChat.Web.Application.Authorization.Facebook.Models;
-using NightChat.DataAccess;
-using NightChat.Infrastructure;
 using NightChat.Web.Application.Authorization.Facebook.Providers;
 using NightChat.Web.Application.Sockets;
 
@@ -70,7 +67,7 @@ namespace NightChat.Web
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationScheme = AuthorizationConstants.AuthCookieName,
+                AuthenticationScheme = Constants.AuthCookieName,
                 LoginPath = new PathString("/chat/login"),
                 AccessDeniedPath = new PathString("/chat/NotAuthorized"),
                 AutomaticAuthenticate = true,
@@ -117,8 +114,7 @@ namespace NightChat.Web
         {
             Mapper.Initialize(config =>
             {
-                config.CreateMap<UserInfoModel, UserData>()
-                .ForCtorParam("avatar", opt => opt.MapFrom(src => src.Picture.Data.Url));
+                config.CreateMap<UserInfoModel, UserData>().ForMember(x => x.Avatar, opt => opt.MapFrom(s => s.Picture.Data.Url));
                 config.CreateMap<TokenModel, TokenData>();
 
                 config.AddProfile<DomainAutoMapperProfile>();

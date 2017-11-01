@@ -12,13 +12,13 @@ namespace NightChat.Core.Http.Senders
     {
         public HttpMessageSenderResponse Post(string url, Header header, HttpContent httpContent = default(HttpContent))
         {
-            HttpClient httpClient = GetHttpClient(header);
+            var httpClient = GetHttpClient(header);
             return GetResponse(httpClient.PostAsync(url, httpContent));
         }
 
         public HttpMessageSenderResponse Get(string url, Header header = null)
         {
-            HttpClient httpClient = GetHttpClient(header ?? new Header());
+            var httpClient = GetHttpClient(header ?? new Header());
             return GetResponse(httpClient.GetAsync(url));
         }
 

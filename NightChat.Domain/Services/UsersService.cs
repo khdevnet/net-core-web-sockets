@@ -15,7 +15,7 @@ namespace NightChat.Domain.Services
 
         public void AddOrUpdateUser(UserData user)
         {
-            UserData userEntity = usersRepository.GetUserById(user.Id);
+            var userEntity = usersRepository.GetUserById(user.Id);
 
             if (userEntity == null)
             {

@@ -1,5 +1,4 @@
 ﻿using NightChat.Domain.Dto;
-using NightChat.Infrastructure.Models;
 
 namespace NightChat.Domain.Messages
 {

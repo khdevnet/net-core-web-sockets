@@ -9,8 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using NightChat.Core.Sockets;
-using NightChat.Infrastructure.Models;
 using NightChat.Web.Application.Authorization;
 
 namespace NightChat.Web.Application.Sockets
@@ -40,10 +38,10 @@ namespace NightChat.Web.Application.Sockets
                 return;
             }
 
-            CancellationToken ct = context.RequestAborted;
-            using (WebSocket currentSocket = await context.WebSockets.AcceptWebSocketAsync())
+            var ct = context.RequestAborted;
+            using (var currentSocket = await context.WebSockets.AcceptWebSocketAsync())
             {
-                string socketId = Guid.NewGuid().ToString();
+                var socketId = Guid.NewGuid().ToString();
 
                 Sockets.TryAdd(socketId, currentSocket);
 
@@ -54,7 +52,7 @@ namespace NightChat.Web.Application.Sockets
                         break;
                     }
 
-                    string response = await ReceiveStringAsync(currentSocket, ct);
+                    var response = await ReceiveStringAsync(currentSocket, ct);
                     if (string.IsNullOrEmpty(response))
                     {
                         if (currentSocket.State != WebSocketState.Open)
@@ -73,7 +71,7 @@ namespace NightChat.Web.Application.Sockets
                             cookieAuthenticationService.SignOut();
                             continue;
                         }
-                        string responseMessage = GetResponseMessage(response);
+                        var responseMessage = GetResponseMessage(response);
 
                         await SendStringAsync(socket.Value, responseMessage, ct);
                     }
@@ -88,12 +86,12 @@ namespace NightChat.Web.Application.Sockets
 
         private string GetResponseMessage(string request)
         {
-            SocketRequestModel requestModel = JsonConvert.DeserializeObject<SocketRequestModel>(request);
-            ISocketMessageProcessor processor = socketMessageProcessors.SingleOrDefault(p => p.MessageType == requestModel.MessageType);
+            var requestModel = JsonConvert.DeserializeObject<SocketRequestModel>(request);
+            var processor = socketMessageProcessors.SingleOrDefault(p => p.MessageType == requestModel.MessageType);
             if (processor != null)
             {
-                object requestData = JsonConvert.DeserializeObject(requestModel.Data, processor.MessageDataType);
-                object result = processor.Process(requestData);
+                var requestData = JsonConvert.DeserializeObject(requestModel.Data, processor.MessageDataType);
+                var result = processor.Process(requestData);
                 return JsonConvert.SerializeObject(result);
             }
 
@@ -103,13 +101,13 @@ namespace NightChat.Web.Application.Sockets
         private static Task SendStringAsync(WebSocket socket, string data, CancellationToken ct = default(CancellationToken))
         {
             byte[] buffer = Encoding.UTF8.GetBytes(data);
-            var segment = new ArraySegment<byte>(buffer);
+            ArraySegment<byte> segment = new ArraySegment<byte>(buffer);
             return socket.SendAsync(segment, WebSocketMessageType.Text, true, ct);
         }
 
         private static async Task<string> ReceiveStringAsync(WebSocket socket, CancellationToken ct = default(CancellationToken))
         {
-            var buffer = new ArraySegment<byte>(new byte[8192]);
+            ArraySegment<byte> buffer = new ArraySegment<byte>(new byte[8192]);
             using (var ms = new MemoryStream())
             {
                 WebSocketReceiveResult result;
@@ -128,7 +126,7 @@ namespace NightChat.Web.Application.Sockets
                     return null;
                 }
 
-                using (StreamReader reader = new StreamReader(ms, Encoding.UTF8))
+                using (var reader = new StreamReader(ms, Encoding.UTF8))
                 {
                     return await reader.ReadToEndAsync();
                 }

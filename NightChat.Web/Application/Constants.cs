@@ -1,6 +1,6 @@
-﻿namespace NightChat.Web.Application.Authorization
+﻿namespace NightChat.Web.Application
 {
-    public static class AuthorizationConstants
+    public static class Constants
     {
         public const string AuthCookieName = "Facebook";
         public const string TokenClaimName = "Token";

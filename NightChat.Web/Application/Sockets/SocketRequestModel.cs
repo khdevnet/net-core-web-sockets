@@ -1,4 +1,4 @@
-﻿namespace NightChat.Infrastructure.Models
+﻿namespace NightChat.Web.Application.Sockets
 {
     public class SocketRequestModel
     {

@@ -20,10 +20,10 @@ namespace NightChat.Domain.Services
 
         public bool Validate(string userId)
         {
-            UserData user = usersRepository.GetUserById(userId);
+            var user = usersRepository.GetUserById(userId);
             if (user != null)
             {
-                TokenData token = tokensRepository.GetTokenByUserId(user.Id);
+                var token = tokensRepository.GetTokenByUserId(user.Id);
 
                 if (token != null)
                 {
@@ -36,7 +36,7 @@ namespace NightChat.Domain.Services
 
         public void AddOrUpdateToken(string userId, string accessToken, int expiresInSeconds)
         {
-            TokenData token = GetToken(userId, accessToken, expiresInSeconds);
+            var token = GetToken(userId, accessToken, expiresInSeconds);
 
             if (tokensRepository.GetTokenByUserId(userId) != null)
             {

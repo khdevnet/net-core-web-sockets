@@ -4,8 +4,8 @@ using Microsoft.Extensions.Options;
 using NightChat.Core.Http;
 using NightChat.Core.Http.Dto;
 using NightChat.Core.Http.Senders;
-using NightChat.Web.Application.Authorization.Facebook.Models;
-using NightChat.Web.Application.Authorization.Facebook.Providers;
+using NightChat.Web.Application.Authentication.Facebook.Models;
+using NightChat.Web.Application.Authentication.Facebook.Providers;
 
 namespace NightChat.Web.Application.Authentication.Facebook
 {

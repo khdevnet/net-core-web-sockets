@@ -13,10 +13,10 @@ using NightChat.DataAccess;
 using NightChat.Domain;
 using NightChat.Domain.Dto;
 using NightChat.Web.Application;
-using NightChat.Web.Application.Authorization;
-using NightChat.Web.Application.Authorization.Facebook;
-using NightChat.Web.Application.Authorization.Facebook.Models;
-using NightChat.Web.Application.Authorization.Facebook.Providers;
+using NightChat.Web.Application.Authentication;
+using NightChat.Web.Application.Authentication.Facebook;
+using NightChat.Web.Application.Authentication.Facebook.Models;
+using NightChat.Web.Application.Authentication.Facebook.Providers;
 using NightChat.Web.Application.Sockets;
 
 namespace NightChat.Web

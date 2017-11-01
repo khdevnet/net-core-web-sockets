@@ -3,7 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
-using NightChat.Web.Application.Authorization.Facebook;
+using NightChat.Web.Application.Authentication.Facebook;
 
 namespace NightChat.Web.Application.Authentication
 {

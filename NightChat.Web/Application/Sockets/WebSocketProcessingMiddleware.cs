@@ -41,10 +41,15 @@ namespace NightChat.Web.Application.Sockets
             var ct = context.RequestAborted;
             using (var currentSocket = await context.WebSockets.AcceptWebSocketAsync())
             {
-                var socketId = Guid.NewGuid().ToString();
-
-                Sockets.TryAdd(socketId, currentSocket);
-
+                var token = context.User.Claims.FirstOrDefault(c => c.Type == Constants.TokenClaimName);
+                if (token != null && !Sockets.TryGetValue(token.Value, out var webSocket))
+                {
+                    Sockets.TryAdd(token.Value, currentSocket);
+                }
+                else
+                {
+                    cookieAuthenticationService.SignOut();
+                }
                 while (true)
                 {
                     if (ct.IsCancellationRequested)
@@ -53,6 +58,9 @@ namespace NightChat.Web.Application.Sockets
                     }
 
                     var response = await ReceiveStringAsync(currentSocket, ct);
+                    if (currentSocket.State != WebSocketState.Open)
+                    {
+                    }
                     if (string.IsNullOrEmpty(response))
                     {
                         if (currentSocket.State != WebSocketState.Open)
@@ -76,10 +84,11 @@ namespace NightChat.Web.Application.Sockets
                         await SendStringAsync(socket.Value, responseMessage, ct);
                     }
                 }
-
-                WebSocket dummy;
-                Sockets.TryRemove(socketId, out dummy);
-
+                if (token != null)
+                {
+                    WebSocket dummy;
+                    Sockets.TryRemove(token.Value, out dummy);
+                }
                 await currentSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", ct);
             }
         }

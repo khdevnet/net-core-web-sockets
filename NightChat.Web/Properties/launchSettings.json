@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:25499//oauth/SignOut",
+      "applicationUrl": "http://localhost:25499/oauth/SignOut",
       "sslPort": 0
     }
   },

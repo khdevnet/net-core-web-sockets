@@ -81,7 +81,7 @@ namespace NightChat.Web
 
             var webSocketOptions = new WebSocketOptions
             {
-                KeepAliveInterval = TimeSpan.FromSeconds(120)
+                KeepAliveInterval = TimeSpan.FromSeconds(15)
             };
 
             app.UseWebSockets(webSocketOptions);

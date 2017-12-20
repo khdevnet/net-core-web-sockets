@@ -108,6 +108,7 @@ namespace NightChat.Web
             builder.RegisterType<UrlProvider>().As<IUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookLoginUrlProvider>().As<IFacebookLoginUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookRedirectUrlProvider>().As<IFacebookRedirectUrlProvider>().SingleInstance();
+            builder.RegisterType<WebSocketConnectionManager>().As<IWebSocketConnectionMannager>().SingleInstance();
         }
 
         private static void AutoMapperConfigure()

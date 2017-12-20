@@ -60,6 +60,9 @@ utils.soketFactory =
                     send: function (data) {
                         var request = JSON.stringify({ "MessageType": messageType, "Data": JSON.stringify(data) });
                         socket.send(request);
+                    },
+                    close: function () {
+                        socket.close();
                     }
                 }
             }

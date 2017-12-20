@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,19 +14,21 @@ namespace NightChat.Web.Application.Sockets
 {
     public class WebSocketProcessingMiddleware
     {
-        private static readonly ConcurrentDictionary<string, WebSocket> Sockets = new ConcurrentDictionary<string, WebSocket>();
         private readonly RequestDelegate next;
         private readonly IEnumerable<ISocketMessageProcessor> socketMessageProcessors;
         private readonly ICookieAuthenticationService cookieAuthenticationService;
+        private readonly IWebSocketConnectionMannager webSocketConnectionMannager;
 
         public WebSocketProcessingMiddleware(
             RequestDelegate next,
             IEnumerable<ISocketMessageProcessor> socketMessageProcessors,
-            ICookieAuthenticationService cookieAuthenticationService)
+            ICookieAuthenticationService cookieAuthenticationService,
+            IWebSocketConnectionMannager webSocketConnectionMannager)
         {
             this.next = next;
             this.socketMessageProcessors = socketMessageProcessors;
             this.cookieAuthenticationService = cookieAuthenticationService;
+            this.webSocketConnectionMannager = webSocketConnectionMannager;
         }
 
         public async Task Invoke(HttpContext context)
@@ -42,13 +43,9 @@ namespace NightChat.Web.Application.Sockets
             using (var currentSocket = await context.WebSockets.AcceptWebSocketAsync())
             {
                 var token = context.User.Claims.FirstOrDefault(c => c.Type == Constants.TokenClaimName);
-                if (token != null && !Sockets.TryGetValue(token.Value, out var webSocket))
+                if (!webSocketConnectionMannager.TryAdd(token?.Value, currentSocket))
                 {
-                    Sockets.TryAdd(token.Value, currentSocket);
-                }
-                else
-                {
-                    cookieAuthenticationService.SignOut();
+                    await SignOut(token?.Value);
                 }
                 while (true)
                 {
@@ -58,25 +55,22 @@ namespace NightChat.Web.Application.Sockets
                     }
 
                     var response = await ReceiveStringAsync(currentSocket, ct);
-                    if (currentSocket.State != WebSocketState.Open)
-                    {
-                    }
                     if (string.IsNullOrEmpty(response))
                     {
                         if (currentSocket.State != WebSocketState.Open)
                         {
-                            cookieAuthenticationService.SignOut();
+                            await SignOut(token?.Value);
                             break;
                         }
 
                         continue;
                     }
 
-                    foreach (KeyValuePair<string, WebSocket> socket in Sockets)
+                    foreach (KeyValuePair<string, WebSocket> socket in webSocketConnectionMannager.GetAll())
                     {
                         if (socket.Value.State != WebSocketState.Open)
                         {
-                            cookieAuthenticationService.SignOut();
+                            await SignOut(socket.Key);
                             continue;
                         }
                         var responseMessage = GetResponseMessage(response);
@@ -84,13 +78,14 @@ namespace NightChat.Web.Application.Sockets
                         await SendStringAsync(socket.Value, responseMessage, ct);
                     }
                 }
-                if (token != null)
-                {
-                    WebSocket dummy;
-                    Sockets.TryRemove(token.Value, out dummy);
-                }
-                await currentSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", ct);
+                await SignOut(token?.Value);
             }
+        }
+
+        private async Task SignOut(string socketId)
+        {
+            await webSocketConnectionMannager.Remove(socketId);
+            cookieAuthenticationService.SignOut();
         }
 
         private string GetResponseMessage(string request)

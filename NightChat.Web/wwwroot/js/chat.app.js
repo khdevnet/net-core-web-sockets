@@ -22,10 +22,12 @@ app.chat = (function (mustache, socketFactory) {
         $inputMsg: undefined,
         $btnSend: undefined,
         $chatArea: undefined,
+        $btnClose: undefined,
         init: function () {
             var self = this;
             self.$inputMsg = $('.input-sm');
             self.$btnSend = $('#btn-chat');
+            self.$btnClose = $('#btn-close');
             self.$chatArea = $('.chat');
 
             var socket = socketFactory.create(getWsUri(), "SendMessageModel");
@@ -40,6 +42,10 @@ app.chat = (function (mustache, socketFactory) {
                 socket.send({ "Message": self.$inputMsg.val() });
                 self.$inputMsg.val('').focus();
                 focusLastMessage();
+            });
+
+            self.$btnClose.click(function () {
+                socket.close();
             });
 
             this.$inputMsg.focus();

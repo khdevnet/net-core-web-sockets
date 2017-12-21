@@ -6,6 +6,7 @@ app.chat = (function (mustache, socketFactory) {
         var template = $('#message-template').html();
         mustache.parse(template);
         return mustache.render(template, message);
+
     }
 
     function focusLastMessage() {
@@ -46,6 +47,10 @@ app.chat = (function (mustache, socketFactory) {
 
             self.$btnClose.click(function () {
                 socket.close();
+            });
+
+            socket.onClose(function () {
+                self.$chatArea.append(renderMessage({ Avatar: "", Name: "", Message: "You was disconnected" }));
             });
 
             this.$inputMsg.focus();

@@ -1,32 +1,43 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
+using NightChat.Web.Application.Extensibility.Sockets;
+using NightChat.Web.Application.Sockets.Models;
 
 namespace NightChat.Web.Application.Sockets
 {
     internal class WebSocketConnectionManager : IWebSocketConnectionMannager
     {
-        private readonly ConcurrentDictionary<string, WebSocket> sockets = new ConcurrentDictionary<string, WebSocket>();
+        private readonly TimeSpan heartbeatTickRate = TimeSpan.FromSeconds(15);
+        private readonly TimeSpan keepAlivePeriod = TimeSpan.FromSeconds(60);
+        private readonly ConcurrentDictionary<string, SocketConnection> sockets = new ConcurrentDictionary<string, SocketConnection>();
+        private Timer timer;
 
-        public WebSocket GetSocketById(string id)
+        public WebSocketConnectionManager()
+        {
+            timer = new Timer(Scan, this, heartbeatTickRate, heartbeatTickRate);
+        }
+
+        public SocketConnection GetSocketById(string id)
         {
             return sockets.FirstOrDefault(p => p.Key == id).Value;
         }
 
-        public ConcurrentDictionary<string, WebSocket> GetAll()
+        public ConcurrentDictionary<string, SocketConnection> GetAll()
         {
             return sockets;
         }
 
-        public string GetId(WebSocket socket)
+        public string GetId(SocketConnection socket)
         {
             return sockets.FirstOrDefault(p => p.Value == socket).Key;
         }
 
-        public bool TryAdd(string id, WebSocket socket)
+        public bool TryAdd(string id, SocketConnection socket)
         {
             if (!String.IsNullOrWhiteSpace(id) && !sockets.TryGetValue(id, out var webSocket))
             {
@@ -35,16 +46,34 @@ namespace NightChat.Web.Application.Sockets
             return false;
         }
 
-        public async Task Remove(string id)
+        public async Task Remove(string id, WebSocketCloseStatus closeStatus = WebSocketCloseStatus.NormalClosure)
         {
-            WebSocket socket;
-            if (sockets.TryRemove(id, out socket))
+            if (sockets.TryRemove(id, out SocketConnection socket))
             {
-                await socket.CloseAsync(
-                    closeStatus: WebSocketCloseStatus.NormalClosure,
+                await socket.Socket.CloseOutputAsync(
+                    closeStatus: closeStatus,
                     statusDescription: "Closed by the WebSocketManager",
                     cancellationToken: CancellationToken.None);
             }
+        }
+
+        public async void Scan()
+        {
+            foreach (KeyValuePair<string, SocketConnection> pairConnection in GetAll())
+            {
+                if ((DateTimeOffset.UtcNow - pairConnection.Value.LastSeen.ToUniversalTime()).TotalSeconds > keepAlivePeriod.TotalSeconds)
+                {
+                   await Remove(pairConnection.Key, WebSocketCloseStatus.EndpointUnavailable);
+                }
+            }
+            // for connections,
+            // if connection lastSeens > 15 seconds
+            // remove connection
+        }
+
+        private static void Scan(object state)
+        {
+            ((WebSocketConnectionManager)state).Scan();
         }
     }
 }

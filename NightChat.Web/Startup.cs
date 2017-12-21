@@ -17,7 +17,9 @@ using NightChat.Web.Application.Authentication;
 using NightChat.Web.Application.Authentication.Facebook;
 using NightChat.Web.Application.Authentication.Facebook.Models;
 using NightChat.Web.Application.Authentication.Facebook.Providers;
+using NightChat.Web.Application.Extensibility.Sockets;
 using NightChat.Web.Application.Sockets;
+using NightChat.Web.Application.Sockets.SocketMessageProcessor;
 
 namespace NightChat.Web
 {
@@ -79,12 +81,7 @@ namespace NightChat.Web
                 }
             });
 
-            var webSocketOptions = new WebSocketOptions
-            {
-                KeepAliveInterval = TimeSpan.FromSeconds(15)
-            };
-
-            app.UseWebSockets(webSocketOptions);
+            app.UseWebSockets();
             app.UseMiddleware<WebSocketProcessingMiddleware>();
             AutoMapperConfigure();
             app.UseMvc(routes =>
@@ -109,6 +106,8 @@ namespace NightChat.Web
             builder.RegisterType<FacebookLoginUrlProvider>().As<IFacebookLoginUrlProvider>().SingleInstance();
             builder.RegisterType<FacebookRedirectUrlProvider>().As<IFacebookRedirectUrlProvider>().SingleInstance();
             builder.RegisterType<WebSocketConnectionManager>().As<IWebSocketConnectionMannager>().SingleInstance();
+            builder.RegisterType<WebSocketHandler>().As<IWebSocketHandler>();
+            builder.RegisterType<KeepAliveTimer>().As<IKeepAliveTimer>();
         }
 
         private static void AutoMapperConfigure()

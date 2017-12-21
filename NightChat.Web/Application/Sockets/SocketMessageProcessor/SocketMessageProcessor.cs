@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using NightChat.Domain.Dto;
 using NightChat.Domain.Messages;
 
-namespace NightChat.Web.Application.Sockets
+namespace NightChat.Web.Application.Sockets.SocketMessageProcessor
 {
     internal class SocketMessageProcessor : SocketMessageProcessorBase<SendMessageModel, ReceiveMessageModel>
     {

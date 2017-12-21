@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NightChat.Web.Application.Sockets
+namespace NightChat.Web.Application.Extensibility.Sockets
 {
     public interface ISocketMessageProcessor
     {

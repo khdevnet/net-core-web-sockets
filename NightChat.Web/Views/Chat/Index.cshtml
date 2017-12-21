@@ -41,13 +41,17 @@
     <!--SignalR script to update the chat page and send messages.-->
     <script id="message-template" type="x-tmpl-mustache">
         <li class="left clearfix">
+            {{#Avatar}}
             <span class="chat-img pull-left">
                 <img src="{{Avatar}}" alt="User Avatar" class="img-circle">
             </span>
+            {{/Avatar}}
             <div class="chat-body clearfix">
+                {{#Name}}
                 <div class="header">
                     <strong class="primary-font">{{Name}}</strong>
                 </div>
+                {{/Name}}
                 <p>
                     {{Message}}
                 </p>

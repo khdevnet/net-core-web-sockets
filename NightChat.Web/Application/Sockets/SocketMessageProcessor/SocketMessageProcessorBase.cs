@@ -1,6 +1,7 @@
 ﻿using System;
+using NightChat.Web.Application.Extensibility.Sockets;
 
-namespace NightChat.Web.Application.Sockets
+namespace NightChat.Web.Application.Sockets.SocketMessageProcessor
 {
     public abstract class SocketMessageProcessorBase<TRequestMessageType, TResponseMessageType> : ISocketMessageProcessor
         where TRequestMessageType : class

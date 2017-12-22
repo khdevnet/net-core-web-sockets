@@ -1,4 +1,4 @@
-﻿namespace NightChat.Web.Application.Authentication.Facebook.Providers
+﻿namespace NightChat.Web.Application.Extensibility.Authentication.Facebook.Providers
 {
     public interface IFacebookRedirectUrlProvider
     {

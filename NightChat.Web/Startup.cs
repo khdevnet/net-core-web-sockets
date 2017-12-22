@@ -1,5 +1,4 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -9,14 +8,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NightChat.Core;
-using NightChat.DataAccess;
 using NightChat.Domain;
-using NightChat.Domain.Dto;
+using NightChat.Domain.Extensibility.Dto;
+using NightChat.Infrastructure.DataAccess;
 using NightChat.Web.Application;
 using NightChat.Web.Application.Authentication;
 using NightChat.Web.Application.Authentication.Facebook;
-using NightChat.Web.Application.Authentication.Facebook.Models;
 using NightChat.Web.Application.Authentication.Facebook.Providers;
+using NightChat.Web.Application.Extensibility.Authentication;
+using NightChat.Web.Application.Extensibility.Authentication.Facebook;
+using NightChat.Web.Application.Extensibility.Authentication.Facebook.Models;
+using NightChat.Web.Application.Extensibility.Authentication.Facebook.Providers;
 using NightChat.Web.Application.Extensibility.Sockets;
 using NightChat.Web.Application.Sockets;
 using NightChat.Web.Application.Sockets.SocketMessageProcessor;
@@ -27,7 +29,7 @@ namespace NightChat.Web
     {
         public Startup(IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder()
+            IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)

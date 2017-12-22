@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using NightChat.Domain.Extensibility.Messages;
+using NightChat.Domain.Extensibility.Services;
 using NightChat.Domain.Messages;
 using NightChat.Domain.Services;
 

@@ -1,6 +1,6 @@
-﻿using NightChat.Domain.Dto;
+﻿using NightChat.Domain.Extensibility.Dto;
 
-namespace NightChat.Domain.Messages
+namespace NightChat.Domain.Extensibility.Messages
 {
     public interface IMessageProcessor
     {

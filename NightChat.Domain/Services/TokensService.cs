@@ -1,7 +1,8 @@
 ﻿using System;
 using NightChat.Core.TimeProviders;
-using NightChat.Domain.Dto;
-using NightChat.Domain.Repositories;
+using NightChat.Domain.Extensibility.Dto;
+using NightChat.Domain.Extensibility.Repositories;
+using NightChat.Domain.Extensibility.Services;
 
 namespace NightChat.Domain.Services
 {
@@ -20,10 +21,10 @@ namespace NightChat.Domain.Services
 
         public bool Validate(string userId)
         {
-            var user = usersRepository.GetUserById(userId);
+            UserData user = usersRepository.GetUserById(userId);
             if (user != null)
             {
-                var token = tokensRepository.GetTokenByUserId(user.Id);
+                TokenData token = tokensRepository.GetTokenByUserId(user.Id);
 
                 if (token != null)
                 {
@@ -36,7 +37,7 @@ namespace NightChat.Domain.Services
 
         public void AddOrUpdateToken(string userId, string accessToken, int expiresInSeconds)
         {
-            var token = GetToken(userId, accessToken, expiresInSeconds);
+            TokenData token = GetToken(userId, accessToken, expiresInSeconds);
 
             if (tokensRepository.GetTokenByUserId(userId) != null)
             {

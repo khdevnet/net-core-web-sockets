@@ -1,7 +1,8 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using NightChat.Domain.Dto;
-using NightChat.Domain.Messages;
+using NightChat.Domain.Extensibility.Dto;
+using NightChat.Domain.Extensibility.Messages;
 
 namespace NightChat.Web.Application.Sockets.SocketMessageProcessor
 {
@@ -18,9 +19,9 @@ namespace NightChat.Web.Application.Sockets.SocketMessageProcessor
 
         protected override ReceiveMessageModel Process(SendMessageModel request)
         {
-            var context = httpContextAccessor.HttpContext;
-            var avatar = context.User.Claims.FirstOrDefault(c => c.Type == Constants.AvatarClaimName);
-            var userData = new UserData { Id = context.User.Identity.Name, Name = context.User.Identity.Name, Avatar = avatar?.Value };
+            HttpContext context = httpContextAccessor.HttpContext;
+            Claim avatar = context.User.Claims.FirstOrDefault(c => c.Type == Constants.AvatarClaimName);
+            UserData userData = new UserData { Id = context.User.Identity.Name, Name = context.User.Identity.Name, Avatar = avatar?.Value };
             return messageProcessor.Process(userData, request);
         }
     }

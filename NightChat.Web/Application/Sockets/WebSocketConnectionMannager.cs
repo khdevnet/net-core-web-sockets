@@ -6,7 +6,7 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using NightChat.Web.Application.Extensibility.Sockets;
-using NightChat.Web.Application.Sockets.Models;
+using NightChat.Web.Application.Extensibility.Sockets.Models;
 
 namespace NightChat.Web.Application.Sockets
 {
@@ -57,18 +57,15 @@ namespace NightChat.Web.Application.Sockets
             }
         }
 
-        public async void Scan()
+        private async void Scan()
         {
             foreach (KeyValuePair<string, SocketConnection> pairConnection in GetAll())
             {
                 if ((DateTimeOffset.UtcNow - pairConnection.Value.LastSeen.ToUniversalTime()).TotalSeconds > keepAlivePeriod.TotalSeconds)
                 {
-                   await Remove(pairConnection.Key, WebSocketCloseStatus.EndpointUnavailable);
+                    await Remove(pairConnection.Key, WebSocketCloseStatus.EndpointUnavailable);
                 }
             }
-            // for connections,
-            // if connection lastSeens > 15 seconds
-            // remove connection
         }
 
         private static void Scan(object state)

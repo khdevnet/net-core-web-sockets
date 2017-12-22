@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using AutoMapper;
-using NightChat.DataAccess.DataContext;
-using NightChat.Domain.Dto;
 using NightChat.Domain.Entities;
-using NightChat.Domain.Repositories;
+using NightChat.Domain.Extensibility.Dto;
+using NightChat.Domain.Extensibility.Repositories;
+using NightChat.Infrastructure.DataAccess.DataContext;
 
-namespace NightChat.DataAccess.Repositories
+namespace NightChat.Infrastructure.DataAccess.Repositories
 {
     internal class UsersRepository : IUsersRepository
     {

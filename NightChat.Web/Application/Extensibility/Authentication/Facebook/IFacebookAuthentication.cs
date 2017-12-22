@@ -1,8 +1,8 @@
 ﻿using System.Security.Principal;
 using NightChat.Web.Application.Authentication;
-using NightChat.Web.Application.Authentication.Facebook.Models;
+using NightChat.Web.Application.Extensibility.Authentication.Facebook.Models;
 
-namespace NightChat.Web.Application.Authentication.Facebook
+namespace NightChat.Web.Application.Extensibility.Authentication.Facebook
 {
     public interface IFacebookAuthentication
     {

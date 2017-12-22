@@ -1,4 +1,4 @@
-﻿namespace NightChat.Domain.Services
+﻿namespace NightChat.Domain.Extensibility.Services
 {
     public interface ITokensService
     {

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using NightChat.Web.Application.Authentication;
+using NightChat.Web.Application.Extensibility.Authentication;
 using NightChat.Web.Application.Extensibility.Sockets;
-using NightChat.Web.Application.Sockets.Models;
+using NightChat.Web.Application.Extensibility.Sockets.Models;
 
 namespace NightChat.Web.Application.Sockets
 {
@@ -24,8 +26,7 @@ namespace NightChat.Web.Application.Sockets
             IEnumerable<ISocketMessageProcessor> socketMessageProcessors,
             ICookieAuthenticationService cookieAuthenticationService,
             IWebSocketConnectionMannager webSocketConnectionMannager,
-            IWebSocketHandler webSocketHandler,
-            IKeepAliveTimer keepAliveTimer)
+            IWebSocketHandler webSocketHandler)
         {
             this.next = next;
             this.socketMessageProcessors = socketMessageProcessors;
@@ -42,11 +43,11 @@ namespace NightChat.Web.Application.Sockets
                 return;
             }
 
-            var cancellationToken = context.RequestAborted;
-            using (var currentSocket = await context.WebSockets.AcceptWebSocketAsync())
+            CancellationToken cancellationToken = context.RequestAborted;
+            using (WebSocket currentSocket = await context.WebSockets.AcceptWebSocketAsync())
             {
-                var token = context.User.Claims.FirstOrDefault(c => c.Type == Constants.TokenClaimName);
-                var connection = new SocketConnection(currentSocket);
+                Claim token = context.User.Claims.FirstOrDefault(c => c.Type == Constants.TokenClaimName);
+                SocketConnection connection = new SocketConnection(currentSocket);
                 if (!webSocketConnectionMannager.TryAdd(token?.Value, new SocketConnection(currentSocket)))
                 {
                     await SignOut(token?.Value);
@@ -58,7 +59,7 @@ namespace NightChat.Web.Application.Sockets
                         break;
                     }
 
-                    var response = await webSocketHandler.ReceiveStringAsync(connection, cancellationToken);
+                    string response = await webSocketHandler.ReceiveStringAsync(connection, cancellationToken);
                     if (String.IsNullOrEmpty(response))
                     {
                         if (currentSocket.State != WebSocketState.Open)
@@ -85,12 +86,12 @@ namespace NightChat.Web.Application.Sockets
 
         private string GetResponseMessage(string request)
         {
-            var requestModel = JsonConvert.DeserializeObject<SocketRequestModel>(request);
-            var processor = socketMessageProcessors.SingleOrDefault(p => p.MessageType == requestModel.MessageType);
+            SocketRequestModel requestModel = JsonConvert.DeserializeObject<SocketRequestModel>(request);
+            ISocketMessageProcessor processor = socketMessageProcessors.SingleOrDefault(p => p.MessageType == requestModel.MessageType);
             if (processor != null)
             {
-                var requestData = JsonConvert.DeserializeObject(requestModel.Data, processor.MessageDataType);
-                var result = processor.Process(requestData);
+                object requestData = JsonConvert.DeserializeObject(requestModel.Data, processor.MessageDataType);
+                object result = processor.Process(requestData);
                 return JsonConvert.SerializeObject(result);
             }
 

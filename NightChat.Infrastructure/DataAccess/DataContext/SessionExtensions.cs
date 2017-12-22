@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace NightChat.DataAccess.DataContext
+namespace NightChat.Infrastructure.DataAccess.DataContext
 {
     internal static class SessionExtensions
     {
@@ -12,9 +12,10 @@ namespace NightChat.DataAccess.DataContext
 
         public static T Get<T>(this ISession session, string key)
         {
-            var value = session.GetString(key);
-            return value == null ? default(T) :
-                                  JsonConvert.DeserializeObject<T>(value);
+            string value = session.GetString(key);
+            return value == null
+                ? default(T)
+                : JsonConvert.DeserializeObject<T>(value);
         }
     }
 }

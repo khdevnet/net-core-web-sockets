@@ -1,6 +1,6 @@
-﻿using NightChat.Domain.Dto;
+﻿using NightChat.Domain.Extensibility.Dto;
 
-namespace NightChat.Domain.Services
+namespace NightChat.Domain.Extensibility.Services
 {
     public interface IUsersService
     {

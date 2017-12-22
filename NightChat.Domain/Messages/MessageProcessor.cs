@@ -1,4 +1,5 @@
-﻿using NightChat.Domain.Dto;
+﻿using NightChat.Domain.Extensibility.Dto;
+using NightChat.Domain.Extensibility.Messages;
 
 namespace NightChat.Domain.Messages
 {

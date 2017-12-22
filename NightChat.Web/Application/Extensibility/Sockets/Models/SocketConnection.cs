@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.WebSockets;
 
-namespace NightChat.Web.Application.Sockets.Models
+namespace NightChat.Web.Application.Extensibility.Sockets.Models
 {
     public class SocketConnection
     {

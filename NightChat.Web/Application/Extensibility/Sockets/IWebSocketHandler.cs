@@ -1,7 +1,6 @@
-﻿using System.Net.WebSockets;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using NightChat.Web.Application.Sockets.Models;
+using NightChat.Web.Application.Extensibility.Sockets.Models;
 
 namespace NightChat.Web.Application.Extensibility.Sockets
 {

@@ -1,4 +1,4 @@
-﻿namespace NightChat.Domain.Dto
+﻿namespace NightChat.Domain.Extensibility.Dto
 {
     public class UserData
     {

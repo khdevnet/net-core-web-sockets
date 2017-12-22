@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NightChat.Domain.Dto
+namespace NightChat.Domain.Extensibility.Dto
 {
     public class TokenData
     {

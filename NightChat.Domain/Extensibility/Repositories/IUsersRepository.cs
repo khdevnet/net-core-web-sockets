@@ -1,6 +1,6 @@
-﻿using NightChat.Domain.Dto;
+﻿using NightChat.Domain.Extensibility.Dto;
 
-namespace NightChat.Domain.Repositories
+namespace NightChat.Domain.Extensibility.Repositories
 {
     public interface IUsersRepository
     {

@@ -1,9 +1,9 @@
 ﻿using Autofac;
-using NightChat.DataAccess.DataContext;
-using NightChat.DataAccess.Repositories;
-using NightChat.Domain.Repositories;
+using NightChat.Domain.Extensibility.Repositories;
+using NightChat.Infrastructure.DataAccess.DataContext;
+using NightChat.Infrastructure.DataAccess.Repositories;
 
-namespace NightChat.DataAccess
+namespace NightChat.Infrastructure.DataAccess
 {
     public class DataAccessAutofacModule : Module
     {

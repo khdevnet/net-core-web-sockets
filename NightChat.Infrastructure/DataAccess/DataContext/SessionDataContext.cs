@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using NightChat.Domain.Entities;
 
-namespace NightChat.DataAccess.DataContext
+namespace NightChat.Infrastructure.DataAccess.DataContext
 {
     internal class SessionDataContext : ISessionDataContext
     {
@@ -30,8 +30,8 @@ namespace NightChat.DataAccess.DataContext
 
         private List<TEntity> GetEntitySet<TEntity>(string key)
         {
-            var val = (httpContextAccessor.HttpContext.Session.Get<List<TEntity>>(key) ?? new List<TEntity>()) as List<TEntity>;
-            httpContextAccessor.HttpContext.Session.Set<List<TEntity>>(key, val);
+            List<TEntity> val = httpContextAccessor.HttpContext.Session.Get<List<TEntity>>(key) ?? new List<TEntity>();
+            httpContextAccessor.HttpContext.Session.Set(key, val);
             return val;
         }
 

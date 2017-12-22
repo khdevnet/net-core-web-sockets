@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NightChat.Domain.Entities;
 
-namespace NightChat.DataAccess.DataContext
+namespace NightChat.Infrastructure.DataAccess.DataContext
 {
     internal interface ISessionDataContext
     {

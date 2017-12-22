@@ -2,9 +2,11 @@
 using System.Security.Principal;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using NightChat.Domain.Dto;
-using NightChat.Domain.Services;
-using NightChat.Web.Application.Authentication.Facebook.Models;
+using NightChat.Domain.Extensibility.Dto;
+using NightChat.Domain.Extensibility.Services;
+using NightChat.Web.Application.Extensibility.Authentication;
+using NightChat.Web.Application.Extensibility.Authentication.Facebook;
+using NightChat.Web.Application.Extensibility.Authentication.Facebook.Models;
 
 namespace NightChat.Web.Application.Authentication.Facebook
 {
@@ -32,10 +34,10 @@ namespace NightChat.Web.Application.Authentication.Facebook
 
         public void Authorize(CodeModel codeModel)
         {
-            var token = facebookHttpSender.GetToken(codeModel.Code);
+            TokenModel token = facebookHttpSender.GetToken(codeModel.Code);
             if (token != null)
             {
-                var userModel = facebookHttpSender.GetUserDetails(token.AccessToken);
+                UserInfoModel userModel = facebookHttpSender.GetUserDetails(token.AccessToken);
                 if (userModel != null)
                 {
                     usersService.AddOrUpdateUser(Mapper.Map<UserData>(userModel));

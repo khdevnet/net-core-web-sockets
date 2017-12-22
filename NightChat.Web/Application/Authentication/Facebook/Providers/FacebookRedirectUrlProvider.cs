@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using NightChat.Web.Application.Extensibility.Authentication.Facebook.Providers;
 using NightChat.Web.Controllers;
 
 namespace NightChat.Web.Application.Authentication.Facebook.Providers

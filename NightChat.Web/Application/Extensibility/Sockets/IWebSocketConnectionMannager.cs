@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
-using NightChat.Web.Application.Sockets.Models;
+using NightChat.Web.Application.Extensibility.Sockets.Models;
 
 namespace NightChat.Web.Application.Extensibility.Sockets
 {
@@ -15,6 +15,6 @@ namespace NightChat.Web.Application.Extensibility.Sockets
 
         bool TryAdd(string id, SocketConnection socket);
 
-        Task Remove(string id, WebSocketCloseStatus closeStatus = default(WebSocketCloseStatus));
+        Task Remove(string id, WebSocketCloseStatus closeStatus = WebSocketCloseStatus.NormalClosure);
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NightChat.Web.Application.Extensibility.Sockets;
-using NightChat.Web.Application.Sockets.Models;
+using NightChat.Web.Application.Extensibility.Sockets.Models;
 
 namespace NightChat.Web.Application.Sockets
 {
@@ -59,7 +59,7 @@ namespace NightChat.Web.Application.Sockets
         public async Task<string> ReceiveStringAsync(SocketConnection socketConnection, CancellationToken ct = default(CancellationToken))
         {
             ArraySegment<byte> buffer = new ArraySegment<byte>(new byte[8192]);
-            using (var ms = new MemoryStream())
+            using (MemoryStream ms = new MemoryStream())
             {
                 WebSocketReceiveResult result;
                 do
@@ -78,9 +78,8 @@ namespace NightChat.Web.Application.Sockets
                     return null;
                 }
 
-                using (var reader = new StreamReader(ms, Encoding.UTF8))
+                using (StreamReader reader = new StreamReader(ms, Encoding.UTF8))
                 {
-                    // update last seen time
                     return await reader.ReadToEndAsync();
                 }
             }

@@ -1,4 +1,4 @@
-﻿namespace NightChat.Domain.Messages
+﻿namespace NightChat.Domain.Extensibility.Dto
 {
     public class ReceiveMessageModel
     {

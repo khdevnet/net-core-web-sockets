@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using NightChat.Domain.Dto;
 using NightChat.Domain.Entities;
+using NightChat.Domain.Extensibility.Dto;
 
 namespace NightChat.Domain
 {

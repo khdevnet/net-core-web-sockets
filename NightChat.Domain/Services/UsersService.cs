@@ -1,5 +1,6 @@
-﻿using NightChat.Domain.Dto;
-using NightChat.Domain.Repositories;
+﻿using NightChat.Domain.Extensibility.Dto;
+using NightChat.Domain.Extensibility.Repositories;
+using NightChat.Domain.Extensibility.Services;
 
 namespace NightChat.Domain.Services
 {
@@ -15,7 +16,7 @@ namespace NightChat.Domain.Services
 
         public void AddOrUpdateUser(UserData user)
         {
-            var userEntity = usersRepository.GetUserById(user.Id);
+            UserData userEntity = usersRepository.GetUserById(user.Id);
 
             if (userEntity == null)
             {

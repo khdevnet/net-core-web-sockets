@@ -1,9 +1,9 @@
 ﻿using System.Security.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using NightChat.Web.Application.Extensibility.Authentication;
-using NightChat.Web.Application.Extensibility.Authentication.Facebook;
-using NightChat.Web.Application.Extensibility.Authentication.Facebook.Models;
-using NightChat.Web.Application.Extensibility.Authentication.Facebook.Providers;
+using NightChat.Web.Extensibility.Authentication;
+using NightChat.Web.Extensibility.Authentication.Facebook;
+using NightChat.Web.Extensibility.Authentication.Facebook.Models;
+using NightChat.Web.Extensibility.Providers;
 
 namespace NightChat.Web.Controllers
 {

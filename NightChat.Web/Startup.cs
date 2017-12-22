@@ -11,17 +11,16 @@ using NightChat.Core;
 using NightChat.Domain;
 using NightChat.Domain.Extensibility.Dto;
 using NightChat.Infrastructure.DataAccess;
-using NightChat.Web.Application;
-using NightChat.Web.Application.Authentication;
-using NightChat.Web.Application.Authentication.Facebook;
-using NightChat.Web.Application.Authentication.Facebook.Providers;
-using NightChat.Web.Application.Extensibility.Authentication;
-using NightChat.Web.Application.Extensibility.Authentication.Facebook;
-using NightChat.Web.Application.Extensibility.Authentication.Facebook.Models;
-using NightChat.Web.Application.Extensibility.Authentication.Facebook.Providers;
-using NightChat.Web.Application.Extensibility.Sockets;
-using NightChat.Web.Application.Sockets;
-using NightChat.Web.Application.Sockets.SocketMessageProcessor;
+using NightChat.Web.Authentication;
+using NightChat.Web.Authentication.Facebook;
+using NightChat.Web.Extensibility.Authentication;
+using NightChat.Web.Extensibility.Authentication.Facebook;
+using NightChat.Web.Extensibility.Authentication.Facebook.Models;
+using NightChat.Web.Extensibility.Providers;
+using NightChat.Web.Extensibility.Sockets;
+using NightChat.Web.Providers;
+using NightChat.Web.Sockets;
+using NightChat.Web.Sockets.SocketMessageProcessor;
 
 namespace NightChat.Web
 {
@@ -109,7 +108,6 @@ namespace NightChat.Web
             builder.RegisterType<FacebookRedirectUrlProvider>().As<IFacebookRedirectUrlProvider>().SingleInstance();
             builder.RegisterType<WebSocketConnectionManager>().As<IWebSocketConnectionMannager>().SingleInstance();
             builder.RegisterType<WebSocketHandler>().As<IWebSocketHandler>();
-            builder.RegisterType<KeepAliveTimer>().As<IKeepAliveTimer>();
         }
 
         private static void AutoMapperConfigure()

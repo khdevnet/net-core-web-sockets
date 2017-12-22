@@ -1,5 +1,7 @@
 #Night Chat
-Description
+
+Description:
+
 Lite chat implementation using System.Net.WebSockets, and custom implementation Facebook OAuth 2.0 Framework
 
 Technologies:
